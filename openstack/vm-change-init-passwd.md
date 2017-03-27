@@ -1,4 +1,4 @@
-openstack ³õ»¯ĞéÄâ»úÃÜÂë
+openstack init vm password
 
 ```
 #!/bin/sh
