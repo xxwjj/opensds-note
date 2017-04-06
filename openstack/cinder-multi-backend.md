@@ -80,3 +80,9 @@ cinder admin extra-specs-list (just to check the settings are there)
 ```
 cinder create --name lvm --volume-type lvm 1
 ```
+
+
+###参考文档
+
+http://docs.ceph.com/docs/master/rbd/rbd-openstack/  
+https://wiki.openstack.org/wiki/Cinder-multi-backend
