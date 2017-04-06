@@ -82,7 +82,7 @@ cinder create --name lvm --volume-type lvm 1
 ```
 
 
-###参考文档
+### 参考文档
 
 http://docs.ceph.com/docs/master/rbd/rbd-openstack/  
 https://wiki.openstack.org/wiki/Cinder-multi-backend
