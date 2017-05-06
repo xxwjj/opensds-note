@@ -3,7 +3,7 @@
 ## k8s 搭建
 
 ### 下载etcd并安装启动etcd
-```
+``` bash
 nohup etcd -name infra1 -initial-advertise-peer-urls http://192.168.0.9:2380 -listen-peer-urls http://192.168.0.9:2380 -listen-client-urls http://192.168.0.9:2379,http://127.0.0.1:2379 -advertise-client-urls http://192.168.0.9:2379 时间-initial-cluster-token etcd-cluster -initial-cluster infra1=http://192.168.0.9:2380,infra2=http://192.168.0.13:2380,infra3=http://192.168.0.14:2380,infra4=http://192.168.0.15:2380 -initial-cluster-state new --data-dir /usr/local/kubernete_test/flanneldata  >> /usr/local/kubernete_test/logs/etcd.log 2>&1 &
 ```
 ```
