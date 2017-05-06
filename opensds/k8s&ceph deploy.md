@@ -143,9 +143,9 @@ rbd map报错：mon0 192.168.0.1:6789 feature set mismatch
 
 
 ## 参考链接：
-http://www.linuxidc.com/Linux/2016-01/127784.htm
-https://docs.docker.com/engine/installation/linux/ubuntu/
-http://www.linuxdiyf.com/linux/18428.html
+http://www.linuxidc.com/Linux/2016-01/127784.htm  
+https://docs.docker.com/engine/installation/linux/ubuntu/  
+http://www.linuxdiyf.com/linux/18428.html  
 http://cephnotes.ksperis.com/blog/2014/01/21/feature-set-mismatch-error-on-ceph-kernel-client/
 
 
