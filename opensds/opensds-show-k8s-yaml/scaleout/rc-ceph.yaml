@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: opensds-rc-ceph
+spec:
+  replicas: 1
+  selector:
+    name: opensds-rc-ceph
+  template:
+    metadata:
+      labels:
+        name: opensds-rc-ceph
+    spec:
+      containers:
+        - image: busybox
+          name: busy-container1
+          command: ["/bin/sleep","7d"]
+          volumeMounts:
+            - name: vol1
+              mountPath: /mnt/pv-1
+      volumes:
+        - name: vol1
+          persistentVolumeClaim:
+            claimName: "pv-ceph"
+
