@@ -122,6 +122,7 @@ echo "osd journal size = 100" >> ceph.conf
 ```
 ceph-deploy install ecs-storage-0001
 ceph-deploy mon create ecs-storage-0001
+ceph-deploy gatherkeys ecs-storage-0001
 ceph-deploy osd prepare ecs-storage-0001:/srv/ceph/osd0
 ceph-deploy osd activate ecs-storage-0001:/srv/ceph/osd0
 ```
