@@ -67,13 +67,13 @@ volume_backend_name=ceph
 #### 创建volume type
 
 ```
-cinder admin type-create lvm
-cinder admin type-key lvm set volume_backend_name=lvm
+cinder type-create lvm
+cinder type-key lvm set volume_backend_name=lvm
 
-cinder admin type-create ceph
-cinder admin type-key ceph set volume_backend_name=ceph
+cinder type-create ceph
+cinder type-key ceph set volume_backend_name=ceph
 
-cinder admin extra-specs-list (just to check the settings are there)
+cinder extra-specs-list (just to check the settings are there)
 ```
 
 #### 创建卷

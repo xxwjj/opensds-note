@@ -1,0 +1,10 @@
+apiVersion: storage.k8s.io/v1beta1
+kind: StorageClass
+metadata:
+  name: opensds-ceph2 
+provisioner: external/flex-simple 
+parameters:
+  backendDriver: "ceph"
+  latency: "low"
+  intervalSnapshot: "10s"
+  deleteSnapshotPolicy: "true"

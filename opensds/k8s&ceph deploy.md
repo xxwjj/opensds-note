@@ -5,14 +5,14 @@
 ### 下载etcd并安装启动etcd
 ``` bash
 nohup etcd -name infra1 -initial-advertise-peer-urls http://192.168.0.9:2380 -listen-peer-urls http://192.168.0.9:2380 -listen-client-urls http://192.168.0.9:2379,http://127.0.0.1:2379 -advertise-client-urls http://192.168.0.9:2379 时间-initial-cluster-token etcd-cluster -initial-cluster infra1=http://192.168.0.9:2380,infra2=http://192.168.0.13:2380,infra3=http://192.168.0.14:2380,infra4=http://192.168.0.15:2380 -initial-cluster-state new --data-dir /usr/local/kubernete_test/flanneldata  >> /usr/local/kubernete_test/logs/etcd.log 2>&1 &
-```
-```
+
+
 nohup etcd -name infra2 -initial-advertise-peer-urls http://192.168.0.13:2380 -listen-peer-urls http://192.168.0.13:2380 -listen-client-urls http://192.168.0.13:2379,http://127.0.0.1:2379 -advertise-client-urls http://192.168.0.13:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://192.168.0.9:2380,infra2=http://192.168.0.13:2380,infra3=http://192.168.0.14:2380,infra4=http://192.168.0.15:2380 -initial-cluster-state new --data-dir /usr/local/kubernete_test/flanneldata  >> /usr/local/kubernete_test/logs/etcd.log 2>&1 &
-```
-```
+
+
 nohup etcd -name infra3 -initial-advertise-peer-urls http://192.168.0.14:2380 -listen-peer-urls http://192.168.0.14:2380 -listen-client-urls http://192.168.0.14:2379,http://127.0.0.1:2379 -advertise-client-urls http://192.168.0.14:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://192.168.0.9:2380,infra2=http://192.168.0.13:2380,infra3=http://192.168.0.14:2380,infra4=http://192.168.0.15:2380 -initial-cluster-state new --data-dir /usr/local/kubernete_test/flanneldata  >> /usr/local/kubernete_test/logs/etcd.log 2>&1 &
-```
-```
+
+
 nohup etcd -name infra4 -initial-advertise-peer-urls http://192.168.0.15:2380 -listen-peer-urls http://192.168.0.15:2380 -listen-client-urls http://192.168.0.15:2379,http://127.0.0.1:2379 -advertise-client-urls http://192.168.0.15:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://192.168.0.9:2380,infra2=http://192.168.0.13:2380,infra3=http://192.168.0.14:2380,infra4=http://192.168.0.15:2380 -initial-cluster-state new --data-dir /usr/local/kubernete_test/flanneldata  >> /usr/local/kubernete_test/logs/etcd.log 2>&1 &
 ```
 
@@ -48,17 +48,14 @@ docker   service docker restart
 
 ```
 nohup kube-apiserver --insecure-bind-address=0.0.0.0 --insecure-port=8080 --service-cluster-ip-range='10.254.0.1/24' --log_dir=/usr/local/kubernete_test/logs/kube --kubelet_port=10250 --v=0 --logtostderr=false --etcd_servers=http://192.168.0.9:2379 --allow_privileged=true >> /usr/local/kubernete_test/logs/kube-apiserver.log 2>&1 &
-```
 
-```
+
 nohup kube-controller-manager  --v=0 --logtostderr=false --log_dir=/usr/local/kubernete_test/logs/kube --master=192.168.0.9:8080 >> /usr/local/kubernete_test/logs/kube-controller-manager 2>&1 &
-```
 
-```
+
 nohup kube-scheduler  --master='192.168.0.9:8080' --v=0  --log_dir=/usr/local/kubernete_test/logs/kube  >> /usr/local/kubernete_test/logs/kube-scheduler.log 2>&1 &
-```
 
-```
+
 kubectl get componentstatuses
 ```
 
@@ -125,6 +122,7 @@ echo "osd journal size = 100" >> ceph.conf
 ```
 ceph-deploy install ecs-storage-0001
 ceph-deploy mon create ecs-storage-0001
+ceph-deploy gatherkeys ecs-storage-0001
 ceph-deploy osd prepare ecs-storage-0001:/srv/ceph/osd0
 ceph-deploy osd activate ecs-storage-0001:/srv/ceph/osd0
 ```
