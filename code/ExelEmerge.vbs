@@ -21,17 +21,17 @@ Function timeStamp()
 	Right("0" & Second(t),2) 
 End Function
 
-Function CopyData(scrSheet, srcStartRow, destSheet, destStartRow, keyCol)
+Function CopyData(srcSheet, srcStartRow, destSheet, destStartRow, keyCol)
 	for i = srcStartRow To srcSheet.UsedRange.Rows.Count
-		v srcSheet.Cells(i, keyCol).Value
+		v = srcSheet.Cells(i, keyCol).Value
 		if v = Empty then
 			exit for
 		end if
 	next
 	i = i - 1
-	Wsh.Echo srcStartRow & ":" & i, destStartRow
+	''Wsh.Echo srcStartRow & ":" & i, destStartRow
 
-	scrSheet.Rows(srcStartRow & ":" & i).Copy
+	srcSheet.Rows(srcStartRow & ":" & i).Copy
 	destSheet.Rows(destStartRow).PasteSpecial
 End Function
 
@@ -59,7 +59,7 @@ Function DoMergeOneSheet(folder, sheetName, headRow, keyCol)
 			idx = destSheet.UsedRange.Rows.Count + 1
 			
 			workbook.close False
-			set workbook = Nothing
+			workbook = Nothing
 		end if
 	next
 End Function
