@@ -1,5 +1,5 @@
 dim filename
-filename = "HW-ÕĞÆ¸Òµ¼¨»ã×Ü-" & timeStamp & "-result.xlsx"
+filename = "HW-æ‹›è˜ä¸šç»©æ±‡æ€»-" & timeStamp & "-result.xlsx"
 set WshShell = WScript.CreateObject("WScript.Shell")
 set fso = CreateObject("Scripting.FileSystemObject")
 set xlsapp = CreateObject("excel.Application")
@@ -46,7 +46,7 @@ Function DoMergeOneSheet(folder, sheetName, headRow, keyCol)
 	destSheet.name = sheetName
 	for each file in folder.Files
 		if InStr(file.name, ".xls") <> 0 and Instr(file.name, "result.xlsx") = 0 and InStr(file.name, "$") = 0 then
-			Wsh.Echo WshShell.CurrentDirectory & "\" & file.name
+			''Wsh.Echo WshShell.CurrentDirectory & "\" & file.name
 			set workbook = xlsapp.workbooks.open(WshShell.CurrentDirectory & "\" & file.name)
 			set srcSheet = workbook.Sheets(sheetName)
 
@@ -59,19 +59,19 @@ Function DoMergeOneSheet(folder, sheetName, headRow, keyCol)
 			idx = destSheet.UsedRange.Rows.Count + 1
 			
 			workbook.close False
-			workbook = Nothing
+			set workbook = Nothing
 		end if
 	next
 End Function
 
-call DoMergeOneSheet(myfolder, "½±ÀøĞÔ¹¤×Ê»ã×Ü±í", 3, 3)	
-call DoMergeOneSheet(myfolder, "ÕĞÆ¸Òµ¼¨±¨±í-IS & SCHÒµÎñ", 2, 2)
+call DoMergeOneSheet(myfolder, "å¥–åŠ±æ€§å·¥èµ„æ±‡æ€»è¡¨", 3, 3)	
+call DoMergeOneSheet(myfolder, "æ‹›è˜ä¸šç»©æŠ¥è¡¨-IS & SCHä¸šåŠ¡", 2, 2)
 
 hb.save
 hb.close
 xlsapp.ScreenUpdating = True
 xlsapp.quit
-MsgBox "Ok, Çë´ò¿ª" & filename
+MsgBox "Ok, è¯·æ‰“å¼€" & filename
 
 
 
