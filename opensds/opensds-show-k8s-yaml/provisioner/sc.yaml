@@ -1,7 +1,8 @@
 apiVersion: storage.k8s.io/v1beta1
 kind: StorageClass
 metadata:
-  name: opensds-ceph 
+  name: default-shared 
 provisioner: external/flex-simple 
 parameters:
-  backendDriver: "ceph"
+  backendDriver: "cinder"
+  volumeType: "lvmdriver-1"
