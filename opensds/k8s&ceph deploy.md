@@ -86,6 +86,7 @@
 成 
 	```ExecStart=/usr/bin/docker -d -H fd:// $DOCKER_OPTS```  
 
+
 ### 启动K8S master进程：
 
 
@@ -96,7 +97,7 @@
 	
 	
 	nohup kube-scheduler --master='192.168.0.9:8080' --v=0  --log_dir=/var/log/k8s/ &>> /var/log/k8s/kube-scheduler.log &
-
+	
 
 kubectl get componentstatuses
 
@@ -181,7 +182,32 @@ rbd map报错：mon0 192.168.0.1:6789 feature set mismatch
 
 如果想要一劳永逸，可以在 ceph.conf 中加入 rbd_default_features = 1 来设置默认 features(数值仅是 layering 对应的 bit 码所对应的整数值)。
 
+## flex-plugin && flex-provisioner
+	go get github.com/leonwanghui/opensds-k8s/cmd/flex-plugin
+	go install github.com/leonwanghui/opensds-k8s/cmd/flex-plugin
+	mkdir -p /usr/libexec/kubernetes/kubelet-plugins/volume/exec/opensds.io~opensds/
+	#copy 需要重启kubelet
+	cp $GOPATH/bin/flex-plugin /usr/libexec/kubernetes/kubelet-plugins/volume/exec/opensds.io~opensds/opensds
+	cd $GOPATH/src/github.com/leonwanghui/opensds-k8s/vendor/github.com/kubernetes-incubator/external-storage/flex
+	make && make container
+	docker save quay.io/kubernetes_incubator/flex-provisione | ssh 45.32.85.145 -C "docker load" # 镜像copy到其它worknode 节点上
 
+
+## k8s 单节点测试环境方法
+	wget https://github.com/coreos/etcd/releases/download/v3.2.0/etcd-v3.2.0-linux-amd64.tar.gz
+	tar xvf etcd-v3.2.0-linux-amd64.tar.gz
+    cp etcd-v3.2.0-linux-amd64/etcd* /usr/local/bin
+	wget https://github.com/kubernetes/kubernetes/archive/release-1.5.zip
+	unzip release-1.5.zip
+	cd kubernetes-release-1.6/hack/
+	./local-up-cluster.sh
+
+	echo 'export GOPATH=/root/gopath' >> /etc/profile
+	echo 'export PATH=/usr/local/go/bin/:$PATH' >> /etc/profile
+	echo 'export PATH=$PATH:$GOPATH/bin >> /etc/profile
+	echo "export PATH=`pwd`:$PATH" >> /etc/profile
+	ln -s kubectl.sh kubectl
+	source /etc/profile
 
 ## 参考链接：
 http://www.linuxidc.com/Linux/2016-01/127784.htm  
