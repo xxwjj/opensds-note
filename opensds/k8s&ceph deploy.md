@@ -37,18 +37,9 @@
 
 
 	nohup etcd -name infra1 -initial-advertise-peer-urls http://45.76.69.84:2380 -listen-peer-urls http://45.76.69.84:2380 -listen-client-urls http://45.76.69.84:2379,http://127.0.0.1:2379 -advertise-client-urls http://45.76.69.84:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://45.76.69.84:2380,infra2=http://45.77.69.39:2380,infra3=http://45.32.83.131:2380,infra4=http://104.238.141.111:2380 -initial-cluster-state new --data-dir /var/lib/etcd/data  &>> /var/log/etcd/etcd.log &
-
-
-	nohup etcd -name infra2 -initial-advertise-peer-urls http://45.77.69.39:2380 -listen-peer-urls http://45.77.69.39:2380 -listen-client-urls http://45.77.69.39:2379,http://127.0.0.1:2379 -advertise-client-urls http://45.77.69.39:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://45.76.69.84:2380,infra2=http://45.77.69.39:2380,infra3=http://45.32.83.131:2380,infra4=http://104.238.141.111:2380 -initial-cluster-state new --data-dir /var/lib/etcd/data  &>> /var/log/etcd/etcd.log &
-	
-	
-	nohup etcd -name infra3 -initial-advertise-peer-urls http://45.32.83.131:2380 -listen-peer-urls http://45.32.83.131:2380 -listen-client-urls http://45.32.83.131:2379,http://127.0.0.1:2379 -advertise-client-urls http://45.32.83.131:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://45.76.69.84:2380,infra2=http://45.77.69.39:2380,infra3=http://45.32.83.131:2380,infra4=http://104.238.141.111:2380 -initial-cluster-state new --data-dir /var/lib/etcd/data  &>> /var/log/etcd/etcd.log &
-	
-	
+	nohup etcd -name infra2 -initial-advertise-peer-urls http://45.77.69.39:2380 -listen-peer-urls http://45.77.69.39:2380 -listen-client-urls http://45.77.69.39:2379,http://127.0.0.1:2379 -advertise-client-urls http://45.77.69.39:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://45.76.69.84:2380,infra2=http://45.77.69.39:2380,infra3=http://45.32.83.131:2380,infra4=http://104.238.141.111:2380 -initial-cluster-state new --data-dir /var/lib/etcd/data  &>> /var/log/etcd/etcd.log &	
+	nohup etcd -name infra3 -initial-advertise-peer-urls http://45.32.83.131:2380 -listen-peer-urls http://45.32.83.131:2380 -listen-client-urls http://45.32.83.131:2379,http://127.0.0.1:2379 -advertise-client-urls http://45.32.83.131:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://45.76.69.84:2380,infra2=http://45.77.69.39:2380,infra3=http://45.32.83.131:2380,infra4=http://104.238.141.111:2380 -initial-cluster-state new --data-dir /var/lib/etcd/data  &>> /var/log/etcd/etcd.log &	
 	nohup etcd -name infra4 -initial-advertise-peer-urls http://104.238.141.111:2380 -listen-peer-urls http://104.238.141.111:2380 -listen-client-urls http://104.238.141.111:2379,http://127.0.0.1:2379 -advertise-client-urls http://104.238.141.111:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://45.76.69.84:2380,infra2=http://45.77.69.39:2380,infra3=http://45.32.83.131:2380,infra4=http://104.238.141.111:2380 -initial-cluster-state new --data-dir /var/lib/etcd/data  &>> /var/log/etcd/etcd.log &
-
-
-
 ### 下载并安装flannel
 	wget https://github.com/coreos/flannel/releases/download/v0.8.0-rc1/flannel-v0.8.0-rc1-linux-amd64.tar.gz
 	tar xvf flannel-v0.8.0-rc1-linux-amd64.tar.gz
@@ -106,10 +97,8 @@
 ### 启动K8S master进程：
 
 
-	nohup kube-apiserver --insecure-bind-address=0.0.0.0 --insecure-port=8080 --service-cluster-ip-range='10.254.0.1/24' --log_dir=/var/log/kube --kubelet_port=10250 --v=0 --logtostderr=false --etcd_servers=http://45.76.69.84:2379 --allow_privileged=true &>> /var/log/kube/kube-apiserver.log  &
-	
-	nohup kube-controller-manager  --v=0 --logtostderr=false --log_dir=/var/log/kube --master=45.76.69.84:8080 &>> /var/log/kube/kube-controller-manager &
-	
+	nohup kube-apiserver --insecure-bind-address=0.0.0.0 --insecure-port=8080 --service-cluster-ip-range='10.254.0.1/24' --log_dir=/var/log/kube --kubelet_port=10250 --v=0 --logtostderr=false --etcd_servers=http://45.76.69.84:2379 --allow_privileged=true &>> /var/log/kube/kube-apiserver.log  &	
+	nohup kube-controller-manager  --v=0 --logtostderr=false --log_dir=/var/log/kube --master=45.76.69.84:8080 &>> /var/log/kube/kube-controller-manager &	
 	nohup kube-scheduler  --master='45.76.69.84:8080' --v=0  --log_dir=/var/log/kube  &>> /var/log/kube/kube-scheduler.log &
 	
 
@@ -118,10 +107,8 @@ kubectl get componentstatuses
 
 ### 启动K8S worknode进程：
 
-	nohup kubelet --logtostderr=false --v=0 --allow-privileged=false  --log_dir=/var/log/kube  --address=0.0.0.0  --port=10250  --hostname_override=45.77.69.39 --api_servers=http://45.76.69.84:8080  &>> /var/log/kube/kube-kubelet.log &
-	
+	nohup kubelet --logtostderr=false --v=0 --allow-privileged=false  --log_dir=/var/log/kube  --address=0.0.0.0  --port=10250  --hostname_override=45.77.69.39 --api_servers=http://45.76.69.84:8080  &>> /var/log/kube/kube-kubelet.log &	
 	nohup kube-proxy  --logtostderr=false --v=0 --master=http://45.76.69.84:8080  &>> /var/log/kube/kube-proxy.log &
-
 
 	kubelet --volume-plugin-dir=/root/plugins/
 
