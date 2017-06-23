@@ -23,8 +23,8 @@
 
 	mkdir /var/log/k8s -p
 	mkdir /var/log/etcd -p
-	mkdir /var/lib/etcd/
-	mkdir /var/log/flannel
+	mkdir /var/lib/etcd/ -p
+	mkdir /var/log/flannel -p
 
 ### 下载etcd并安装
 
