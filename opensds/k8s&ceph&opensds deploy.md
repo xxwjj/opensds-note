@@ -15,7 +15,7 @@
 	mkdir -p $HOME/gopath/src
 	mkdir -p $HOME/gopath/bin
 	echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/gopath/bin` >> /etc/profile
-	echo 'export GOPATH=$HOME/gopath/src' >> /etc/profile
+	echo 'export GOPATH=$HOME/gopath' >> /etc/profile
 	source /etc/profile
 	go version #查看是否安装正确
 
@@ -47,19 +47,20 @@
 	tar xvf flannel-v0.8.0-rc1-linux-amd64.tar.gz -C flannel/
 	cp flannel/flanneld /usr/local/bin/
 	cp flannel/mk-docker-opts.sh /usr/local/bin/
+
+
 ### 在etcd中写入docker子网信息：
-
-
 	ETCDCTL_API=2 etcdctl set /coreos.com/network/config '{ "Network": "172.17.0.0/16" }'
 
-
 ### 启动flannel：
-
 	nohup flanneld &>> /var/log/flannel/flanneld.log &
 
 
-### 修改docker启动参数：
+### 安装docker
+	wget -qO- https://get.docker.com/ | sh
 
+
+### 修改docker启动参数：
 	mk-docker-opts.sh -i
 	source /run/flannel/subnet.env
 	rm /var/run/docker.pid
@@ -78,13 +79,10 @@
 
 用ifconfig 查看 docker ip是否已经更改，如果没有请参考作如下修改
 
-编辑 ```/lib/systemd/system/docker.service  ```
-增加如下配制：  
+编辑 ```/lib/systemd/system/docker.service  ```   
+增加：  
 	```EnvironmentFile=-/etc/default/docker    ```  
-修改
-	```ExecStart=/usr/bin/docker -d -H fd://   ```  
-成 
-	```ExecStart=/usr/bin/docker -d -H fd:// $DOCKER_OPTS```  
+修改  	```ExecStart=/usr/bin/docker -d -H fd://   ```==>```ExecStart=/usr/bin/docker -d -H fd:// $DOCKER_OPTS```  
 
 ### 下载k8s 1.5
 
@@ -233,6 +231,32 @@ rbd map报错：mon0 192.168.0.1:6789 feature set mismatch
 
 	mkdir -p /var/log/os-brick/
 	nohup os-brick-api --config-file /etc/os-brick/os-brick.conf &>> /var/log/os-brick/os-brick.conf &
+
+## 安装opensds
+
+	go install github.com/opensds/opensds/cmd/osds-apiserver
+	go install github.com/opensds/opensds/cmd/osdsctl
+	go install github.com/opensds/opensds/cmd/osdsdock
+	go install github.com/opensds/opensds/cmd/osdslet
+	
+	mkdir -p $HOME/gopath/bin
+	echo 'export GOPATH=$HOME/gopath' >> /etc/profile
+	echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/gopath/bin' >> /etc/profile
+	. /etc/profile
+
+	scp $HOME/gopath/bin/osds* opensds-worker-1:/$HOME/gopath/bin
+	scp $HOME/gopath/bin/osds* opensds-worker-2:/$HOME/gopath/bin
+	scp $HOME/gopath/bin/osds* opensds-worker-3:/$HOME/gopath/bin
+
+
+	#master
+	mkdir /etc/opensds
+	cp $HOME/gopath/src/github.com/opensds/opensds/examples/*.json /etc/opensds/
+	nohup osds-apiserver &>> /var/log	/opensds/osds-apiserver.log &
+	nohup osds-let &>> /var/log	/opensds/osds-apiserver.log &
+
+	#worker
+	nohup osds-dock &>> /var/log	/opensds/osds-apiserver.log &
 
 ## 参考链接：
 http://www.linuxidc.com/Linux/2016-01/127784.htm  
