@@ -14,7 +14,7 @@
 	tar xvf go1.7.6.linux-amd64.tar.gz -C /usr/local/
 	mkdir -p $HOME/gopath/src
 	mkdir -p $HOME/gopath/bin
-	echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/gopath/bin` >> /etc/profile
+	echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/gopath/bin' >> /etc/profile
 	echo 'export GOPATH=$HOME/gopath' >> /etc/profile
 	source /etc/profile
 	go version #查看是否安装正确
