@@ -42,7 +42,6 @@
 	nohup etcd -name infra4 -initial-advertise-peer-urls http://104.238.141.111:2380 -listen-peer-urls http://104.238.141.111:2380 -listen-client-urls http://104.238.141.111:2379,http://127.0.0.1:2379 -advertise-client-urls http://104.238.141.111:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://45.76.69.84:2380,infra2=http://45.77.69.39:2380,infra3=http://45.32.83.131:2380,infra4=http://104.238.141.111:2380 -initial-cluster-state new --data-dir /var/lib/etcd/data  &>> /var/log/etcd/etcd.log &
 ### 下载并安装flannel
 	wget https://github.com/coreos/flannel/releases/download/v0.8.0-rc1/flannel-v0.8.0-rc1-linux-amd64.tar.gz
-	tar xvf flannel-v0.8.0-rc1-linux-amd64.tar.gz
 	mkdir flannel
 	tar xvf flannel-v0.8.0-rc1-linux-amd64.tar.gz -C flannel/
 	cp flannel/flanneld /usr/local/bin/
