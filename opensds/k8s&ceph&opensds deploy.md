@@ -40,6 +40,10 @@
 	nohup etcd -name infra2 -initial-advertise-peer-urls http://45.77.69.39:2380 -listen-peer-urls http://45.77.69.39:2380 -listen-client-urls http://45.77.69.39:2379,http://127.0.0.1:2379 -advertise-client-urls http://45.77.69.39:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://45.76.69.84:2380,infra2=http://45.77.69.39:2380,infra3=http://45.32.83.131:2380,infra4=http://104.238.141.111:2380 -initial-cluster-state new --data-dir /var/lib/etcd/data  &>> /var/log/etcd/etcd.log &	
 	nohup etcd -name infra3 -initial-advertise-peer-urls http://45.32.83.131:2380 -listen-peer-urls http://45.32.83.131:2380 -listen-client-urls http://45.32.83.131:2379,http://127.0.0.1:2379 -advertise-client-urls http://45.32.83.131:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://45.76.69.84:2380,infra2=http://45.77.69.39:2380,infra3=http://45.32.83.131:2380,infra4=http://104.238.141.111:2380 -initial-cluster-state new --data-dir /var/lib/etcd/data  &>> /var/log/etcd/etcd.log &	
 	nohup etcd -name infra4 -initial-advertise-peer-urls http://104.238.141.111:2380 -listen-peer-urls http://104.238.141.111:2380 -listen-client-urls http://104.238.141.111:2379,http://127.0.0.1:2379 -advertise-client-urls http://104.238.141.111:2379 -initial-cluster-token etcd-cluster -initial-cluster infra1=http://45.76.69.84:2380,infra2=http://45.77.69.39:2380,infra3=http://45.32.83.131:2380,infra4=http://104.238.141.111:2380 -initial-cluster-state new --data-dir /var/lib/etcd/data  &>> /var/log/etcd/etcd.log &
+
+### 查看安装是etcdctl cluster状态
+	etcdctl cluster-health
+
 ### 下载并安装flannel
 	wget https://github.com/coreos/flannel/releases/download/v0.8.0-rc1/flannel-v0.8.0-rc1-linux-amd64.tar.gz
 	mkdir flannel
@@ -53,10 +57,15 @@
 
 ### 启动flannel：
 	nohup flanneld &>> /var/log/flannel/flanneld.log &
-
+	如果有多张网卡需要指定网卡：
+	nohup flanneld -iface enp0s8 &>> /var/log/flanneld.log &
 
 ### 安装docker
-	wget -qO- https://get.docker.com/ | sh
+* 方法1：  
+	```wget -qO- https://get.docker.com/ | sh```
+
+* 方法2：  
+	```apt-get install docker.io```
 
 
 ### 修改docker启动参数：
@@ -78,10 +87,11 @@
 
 用ifconfig 查看 docker ip是否已经更改，如果没有请参考作如下修改
 
-编辑 ```/lib/systemd/system/docker.service  ```   
+```vim /lib/systemd/system/docker.service  ```  
 增加：  
-	```EnvironmentFile=-/etc/default/docker    ```  
-修改  	```ExecStart=/usr/bin/docker -d -H fd://   ```==>```ExecStart=/usr/bin/docker -d -H fd:// $DOCKER_OPTS```  
+```EnvironmentFile=-/etc/default/docker    ```  
+修改：  
+```ExecStart=/usr/bin/docker -d -H fd://   ```==>```ExecStart=/usr/bin/docker -d -H fd:// $DOCKER_OPTS```  
 
 ### 下载k8s 1.5
 
@@ -152,7 +162,7 @@ kubectl get componentstatuses
 
 	mkdir ceph-cluster
 	cd ceph-cluster
-	ceph-deploy new  ecs-storage-0001
+	ceph-deploy new  opensds-worker-1
 
 
 如果是单节点：
@@ -163,25 +173,39 @@ kubectl get componentstatuses
 
 ### 安装mon 和osd
 
-	ceph-deploy install ecs-storage-0001
-	ceph-deploy mon create ecs-storage-0001
-	ceph-deploy gatherkeys ecs-storage-0001
-	ceph-deploy osd prepare ecs-storage-0001:/srv/ceph/osd0
+	ceph-deploy install opensds-worker-1
+	ceph-deploy mon create opensds-worker-1
+	ceph-deploy gatherkeys opensds-worker-1
+	ceph-deploy osd prepare opensds-worker-1:/srv/ceph/osd0
 	chown -R ceph:ceph /srv/ceph/osd0/
-	ceph-deploy osd activate ecs-storage-0001:/srv/ceph/osd0
+	ceph-deploy osd activate opensds-worker-1:/srv/ceph/osd0
 
-
-启动ceph osd时，系统找不到命令ceph-disk-prepare和ceph-disk-activate，需要更改执行的指令：
+### 问题
+#### 启动ceph osd时，系统找不到命令ceph-disk-prepare和ceph-disk-activate，需要更改执行的指令：
 
 	
 	ceph-disk -v prepare --fs-type xfs --cluster ceph -- /srv/ceph/osd0
 	ceph-disk -v activate --mark-init upstart --mount /srv/ceph/osd3
+### 查看ceph 状态 
+	ceph status
+	ceph health
+
+### ceph 常用命令
+	rbd create imagesname --size 1M
+	rbd ls
+	rbd map imagesname
+	rbd showmapped
+	rbd unmap
 
 
-rbd map报错：mon0 192.168.0.1:6789 feature set mismatch
-解决方法：ceph osd crush tunables legacy
+#### rbd map报错：mon0 192.168.0.1:6789 feature set mismatch
+* 解决方法：ceph osd crush tunables legacy  
+* 如果想要一劳永逸，可以在 vi /etc/ceph/ceph.conf 中加入 rbd_default_features = 1 来设置默认 features(数值仅是 layering 对应的 bit 码所对应的整数值)。
 
-如果想要一劳永逸，可以在 vi /etc/ceph/ceph.conf 中加入 rbd_default_features = 1 来设置默认 features(数值仅是 layering 对应的 bit 码所对应的整数值)。
+#### ceph-deploy install 报错： bash: python: command not found
+	安装python
+	apt-get install python2.7 -y
+	ln -s /usr/bin/python2.7 /usr/bin/python
 
 ## flex-plugin && flex-provisioner
 	go get github.com/leonwanghui/opensds-k8s/cmd/flex-plugin/opensds
