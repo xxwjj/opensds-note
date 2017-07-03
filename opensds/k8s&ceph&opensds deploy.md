@@ -140,12 +140,12 @@ kubectl get componentstatuses
 
 
 ## Ceph搭建
-
+**注：** opensds-worker-1 为节点主机名，ceph-deploy会通过主机名访问,因些需要的hosts设置主机名和ip的映射关系。
 ### 创建loop 块
 
 	cd /home/
-	dd if=/dev/zero of=ceph.img bs=1GB count=10
-	losetup /dev/loop1 ceph.img 
+	dd if=/dev/zero of=/home/ceph.img bs=1GB count=10
+	losetup /dev/loop1 /home/ceph.img 
 
 ### 挂载块
 
@@ -280,6 +280,10 @@ kubectl get componentstatuses
 
 	#worker
 	nohup osds-dock &>> /var/log	/opensds/osds-apiserver.log &
+
+### helm 安装
+	curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get｜bash
+
 
 ## 参考链接：
 http://www.linuxidc.com/Linux/2016-01/127784.htm  
