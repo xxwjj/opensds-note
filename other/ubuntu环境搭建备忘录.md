@@ -48,8 +48,11 @@ vim ~/.vnc/xstartup 加入如下配制
 https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04
 
 ## 安装ubuntu 虚拟机
+- 安装ubuntu的过程中，有一部需要安装一些基础软件，清注意把OpenserverSSH选上。
 - virtaulbox默认没有host-only 网卡，需要手动创建网卡virtualbox 全局设置，ctrl + G 在 Network 里添加一个 adapter，vboxnet0
 - 添加完成后用 `ifconfig -a` 查看，如果虚拟网卡不有启动，运行`ifconfig vboxnet0 up` 启动
+- 在用ova镜像启动的时候注意网卡的mac地址需要更新一下，不然后会出现ping 包重复的现象。
+- 可以在/etc/hostname里面修改hostname.
 
 ### 参考
 http://blog.csdn.net/yuchao2015/article/details/52132270
