@@ -48,7 +48,8 @@ vim ~/.vnc/xstartup 加入如下配制
 https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04
 
 ## 安装ubuntu 虚拟机
-virtaulbox默认没有host-only 网卡，需要手动创建网卡virtualbox 全局设置，ctrl + G 在 Network 里添加一个 adapter，vboxnet0
+- virtaulbox默认没有host-only 网卡，需要手动创建网卡virtualbox 全局设置，ctrl + G 在 Network 里添加一个 adapter，vboxnet0
+- 添加完成后用 `ifconfig -a` 查看，如果虚拟网卡不有启动，运行`ifconfig vboxnet0 up` 启动
 
 ### 参考
 http://blog.csdn.net/yuchao2015/article/details/52132270
