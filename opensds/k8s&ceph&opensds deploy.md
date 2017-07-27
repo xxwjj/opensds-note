@@ -186,9 +186,17 @@ kubectl get componentstatuses
 	
 	ceph-disk -v prepare --fs-type xfs --cluster ceph -- /srv/ceph/osd0
 	ceph-disk -v activate --mark-init upstart --mount /srv/ceph/osd3
-### 查看ceph 状态 
-	ceph status
+
+### 查看监控集群状态:
 	ceph health
+	ceph status
+	ceph osd stat
+	ceph osd dump
+	ceph osd tree
+	ceph mon dump
+	ceph quorum_status
+	ceph mds stat
+	ceph mds dump
 
 ### ceph 常用命令
 	rbd create imagesname --size 1M
@@ -196,8 +204,15 @@ kubectl get componentstatuses
 	rbd map imagesname
 	rbd showmapped
 	rbd unmap
+### 可能出现内核不有加载ceph ko的情况
+	# 查询
+	lsmod | grep ceph
+	lsmod | grep rbd
+	# 加载
+	modprobe ceph
+	moprobe rbd
 
-
+### 报错解决方案
 #### rbd map报错：mon0 192.168.0.1:6789 feature set mismatch
 * 解决方法：ceph osd crush tunables legacy  
 * 如果想要一劳永逸，可以在 vi /etc/ceph/ceph.conf 中加入 rbd_default_features = 1 来设置默认 features(数值仅是 layering 对应的 bit 码所对应的整数值)。
@@ -206,6 +221,32 @@ kubectl get componentstatuses
 	安装python
 	apt-get install python2.7 -y
 	ln -s /usr/bin/python2.7 /usr/bin/python
+
+#### 集群状态 为HEATL_ERR
+ceph -s 出现如下错误
+
+
+	root@opensds-worker-1:/var/log/ceph# ceph -s
+	    cluster 60445850-b6b2-4fad-8651-fed96bfff9c3
+	     health HEALTH_ERR
+	            64 pgs are stuck inactive for more than 300 seconds
+	            64 pgs degraded
+	            64 pgs stuck degraded
+	            64 pgs stuck inactive
+	            64 pgs stuck unclean
+	            64 pgs stuck undersized
+	            64 pgs undersized
+	     monmap e1: 1 mons at {opensds-worker-1=192.168.56.101:6789/0}
+	            election epoch 4, quorum 0 opensds-worker-1
+	     osdmap e8: 1 osds: 1 up, 1 in
+	            flags sortbitwise,require_jewel_osds
+	      pgmap v61: 64 pgs, 1 pools, 0 bytes data, 0 objects
+	            5152 MB used, 4373 MB / 9526 MB avail
+	                  64 undersized+degraded+peered
+
+`ps -ef|grep ceph` 查看发现有个节点并没有启动osd,后面用 `ceph-deploy osd activate opensds-worker-2:/srv/ceph/osd0 ` 启动即可
+
+
 
 ## flex-plugin && flex-provisioner
 	go get github.com/leonwanghui/opensds-k8s/cmd/flex-plugin/opensds
@@ -291,5 +332,6 @@ https://docs.docker.com/engine/installation/linux/ubuntu/
 http://www.linuxdiyf.com/linux/18428.html  
 http://cephnotes.ksperis.com/blog/2014/01/21/feature-set-mismatch-error-on-ceph-kernel-client/
 https://mritd.me/2017/05/27/ceph-note-1/
+https://my.oschina.net/renguijiayi/blog/293317?p=1
 
 
