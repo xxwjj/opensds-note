@@ -297,9 +297,9 @@ ceph -s 出现如下错误
 	nohup os-brick-api --config-file /etc/os-brick/os-brick.conf &>> /var/log/os-brick/os-brick.conf &
 
 ## 安装opensds
+### 下载编译
+	apt-get install librbd-dev librados-dev
 
-	go install github.com/opensds/opensds/cmd/osds-apiserver
-	go install github.com/opensds/opensds/cmd/osdsctl
 	go install github.com/opensds/opensds/cmd/osdsdock
 	go install github.com/opensds/opensds/cmd/osdslet
 	
@@ -312,15 +312,66 @@ ceph -s 出现如下错误
 	scp $HOME/gopath/bin/osds* opensds-worker-2:/$HOME/gopath/bin
 	scp $HOME/gopath/bin/osds* opensds-worker-3:/$HOME/gopath/bin
 
-
+### 启动
 	#master
 	mkdir /etc/opensds
+	mkdir /var/log/opensds
 	cp $HOME/gopath/src/github.com/opensds/opensds/examples/*.json /etc/opensds/
-	nohup osds-apiserver &>> /var/log	/opensds/osds-apiserver.log &
-	nohup osds-let &>> /var/log	/opensds/osds-apiserver.log &
+	nohup osdslet --endpoint=192.168.56.100:50040 &>> /opensds/osdslet-api-req.log &
 
 	#worker
-	nohup osds-dock &>> /var/log	/opensds/osds-apiserver.log &
+	nohup osdsdock &>> /dev/null &
+### 测试
+#### profile
+list
+
+	curl -X GET  http://192.168.56.100:50040/api/v1alpha1/block/profiles | python -m json.tool
+
+show
+
+	curl -X GET  http://192.168.56.100:50040/api/v1alpha1/block/profiles/cff92323-06e0-40c1-82c0-d49f20539c15 | python -m json.tool
+
+create
+
+	
+	curl -X POST -H "Content-Type: application/json"  \
+	http://192.168.56.100:50040/api/v1alpha1/block/profiles -d \
+	'{
+	    "spec": {
+	        "name": "default",
+	        "description": "default policy"
+	    }
+	}' | python -m json.tool
+
+delete
+
+	curl -X DELETE  http://192.168.56.100:50040/api/v1alpha1/block/profiles/0337b89b-1b0c-4608-9297-df9d91d3495e
+
+
+#### volume
+list
+
+	curl -X GET  http://192.168.56.100:50040/api/v1alpha1/block/volumes | python -m json.tool
+
+show
+
+	curl -X GET  http://192.168.56.100:50040/api/v1alpha1/block/volumes/81d909ee-6f3a-4d57-9bb4-7aab830d26ff | python -m json.tool
+
+create
+
+	curl -X POST -H "Content-Type: application/json"  \
+	http://192.168.56.100:50040/api/v1alpha1/block/volumes -d \
+	'{
+	    "spec": {
+	        "name": "vol001",
+	        "description": "test vol",
+	        "size": 1
+	    }
+	}'| python -m json.tool
+
+delete
+
+	curl -X DELETE  http://192.168.56.100:50040/api/v1alpha1/block/volumes/0ff19ed4-5ae6-4a88-bff2-1c3bcff442ec -d '{"spec":{}}' | python -m json.tool
 
 ### helm 安装
 	curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get｜bash
