@@ -373,9 +373,20 @@ delete
 
 	curl -X DELETE  http://192.168.56.100:50040/api/v1alpha1/block/volumes/0ff19ed4-5ae6-4a88-bff2-1c3bcff442ec -d '{"spec":{}}' | python -m json.tool
 
+#### snapshots
+	curl -X GET  http://192.168.56.100:50040/api/v1alpha1/block/snapshots| python -m json.tool
+
+	curl -X POST -H "Content-Type: application/json"  http://192.168.56.100:50040/api/v1alpha1/block/snapshots -d '{
+	    "spec": {
+	        "name": "snap001",
+	        "description": "test snap001",
+	        "volumeId": "81d909ee-6f3a-4d57-9bb4-7aab830d26ff"
+	    }
+	}'| python -m json.tool
+
+
 ### helm 安装
 	curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get｜bash
-
 
 ## 参考链接：
 http://www.linuxidc.com/Linux/2016-01/127784.htm  
