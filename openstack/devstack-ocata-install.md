@@ -1,8 +1,8 @@
 # devstack ocata 版本安装方法 #
 
 ## 环境信息
-ubuntu 16.04
-python2.7
+* ubuntu 16.04
+* python2.7
 ## 安装步骤
 
 ### 创建stack user
@@ -35,16 +35,20 @@ vim /etc/apt/source.list 替换成如下配制
 	sudo apt-get install git
 
 ### 下载devstack 切换到ocata版本
-	#方法1
-	git clone http://git.trystack.cn/openstack-dev/devstack.git -b stable/ocata  
-	#方法2
-	git clone https://github.com/openstack-dev/devstack.git 
-	cd devstack/;git branch -a
-	git checkout -b mitaka  origin/stable/ocata
+* 方法1  
+
+    	git clone http://git.trystack.cn/openstack-dev/devstack.git -b stable/ocata  
+
+* 方法2
+
+    	git clone https://github.com/openstack-dev/devstack.git 
+    	cd devstack/;git branch -a
+    	git checkout -b mitaka  origin/stable/ocata
 
 
 ### 安装pip
-	# devstack 安装pip有问题，可以直接通过命令下载，并copy到对应的目录
+devstack 安装pip有问题，可以直接通过命令下载，并copy到对应的目录
+
 	wget  https://bootstrap.pypa.io/get-pip.py
 	cp get-pip.py /home/devstack/files/
 
