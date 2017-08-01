@@ -56,7 +56,6 @@ devstack 安装pip有问题，可以直接通过命令下载，并copy到对应�
 
 	[global]
 	index-url = http://mirrors.aliyun.com/pypi/simple/
-	[install]
 	trusted-host=mirrors.aliyun.com
 
 ### 配置local.conf文件
@@ -152,3 +151,7 @@ local.conf 文件配制如下，需要修改相应该的IP
 ### 启动devstack
 
 	./stack
+
+## 参考
+http://blog.csdn.net/qiqishuang/article/details/51990662
+http://blog.csdn.net/debo0531/article/details/71452945?locationNum=2&fps=1
