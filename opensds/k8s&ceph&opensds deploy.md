@@ -44,6 +44,12 @@
 ### 查看安装是etcdctl cluster状态
 	etcdctl cluster-health
 
+### 用法
+	# 查看所有以api为前缀的值
+	ETCDCTL_API=3 etcdctl get /api --prefix=true
+	# 删除所有以api为前缀的值
+	ETCDCTL_API=3 etcdctl del /api --prefix=true
+
 ### 下载并安装flannel
 	wget https://github.com/coreos/flannel/releases/download/v0.8.0-rc1/flannel-v0.8.0-rc1-linux-amd64.tar.gz
 	mkdir flannel
@@ -375,15 +381,7 @@ delete
 
 #### snapshots
 	curl -X GET  http://192.168.56.100:50040/api/v1alpha1/block/snapshots| python -m json.tool
-
-	curl -X POST -H "Content-Type: application/json"  http://192.168.56.100:50040/api/v1alpha1/block/snapshots -d '{
-	    "spec": {
-	        "name": "snap001",
-	        "description": "test snap001",
-	        "volumeId": "81d909ee-6f3a-4d57-9bb4-7aab830d26ff"
-	    }
-	}'| python -m json.tool
-
+	
 
 ### helm 安装
 	curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get｜bash
