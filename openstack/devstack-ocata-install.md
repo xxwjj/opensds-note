@@ -6,12 +6,13 @@
 ## 安装步骤
 
 ### 创建stack user
-	sudo useradd stack -m 
-	sudo passwd stack
-	#如果需要删除可以用命令
-	sudo userdel stack -r
-	#添加sudo权限
-	sudo echo "stack ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+* 创建stack用户
+
+		sudo useradd -s /bin/bash -d /opt/stack -m stack
+* 添加sudo权限
+
+		echo "stack ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/stack
+		sudo su - stack
 
 ### 设置apt源
 vim /etc/apt/source.list 替换成如下配制
@@ -152,6 +153,16 @@ local.conf 文件配制如下，需要修改相应该的IP
 
 	./stack
 
+### 用法
+设置环境变量
+
+	source openrc admin admin
+	source openrc demo demo
+
 ## 参考
+https://docs.openstack.org/devstack/latest/
+
 http://blog.csdn.net/qiqishuang/article/details/51990662
+
 http://blog.csdn.net/debo0531/article/details/71452945?locationNum=2&fps=1
+
