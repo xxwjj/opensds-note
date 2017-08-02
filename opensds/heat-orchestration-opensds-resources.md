@@ -162,18 +162,16 @@ class OsdsVolume(resource.Resource):
 
     def _create_volume(self, name, description, size, profile_id):
         data = {
-            "spec": {
-                "name": name,
-                "description": description,
-                "size": int(size),
-                "profileId": profile_id
-            }
+            "name": name,
+            "description": description,
+            "size": int(size),
+            "profileId": profile_id
         }
         headers = {"Content-type": "application/json"}
         conn = None
         try:
             conn = httplib.HTTPConnection(self.HOST)
-            conn.request('POST', '/api/v1alpha1/block/volumes', json.dumps(data), headers)
+            conn.request('POST', '/api/v1alpha/block/volumes', json.dumps(data), headers)
             resp = conn.getresponse()
             body = resp.read()
         finally:
@@ -186,15 +184,13 @@ class OsdsVolume(resource.Resource):
 
     def _delete_volume(self, volume_id, profile_id):
         data = {
-            "spec": {
-                "profileId": profile_id
-            }
+            "profileId": profile_id
         }
         headers = {"Content-type": "application/json"}
         conn = None
         try:
             conn = httplib.HTTPConnection(self.HOST)
-            conn.request('DELETE', '/api/v1alpha1/block/volumes/' + volume_id, json.dumps(data), headers)
+            conn.request('DELETE', '/api/v1alpha/block/volumes/' + volume_id, json.dumps(data), headers)
             resp = conn.getresponse()
             body = resp.read()
             LOG.info("status:%s, reason:%s, response:%s"%(resp.status, resp.reason, body))
@@ -209,7 +205,7 @@ class OsdsVolume(resource.Resource):
         headers = {"Content-type": "application/json"}
         try:
             conn = httplib.HTTPConnection(self.HOST)
-            conn.request('GET', '/api/v1alpha1/block/volumes/' + volume_id, None, headers)
+            conn.request('GET', '/api/v1alpha/block/volumes/' + volume_id, None, headers)
             resp = conn.getresponse()
             body = resp.read()
         finally:
