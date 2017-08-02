@@ -73,81 +73,64 @@ local.conf 文件配制如下，需要修改相应该的IP
 	NOVNC_REPO=http://git.trystack.cn/kanaka/noVNC.git
 	SPICE_REPO=http://git.trystack.cn/git/spice/spice-html5.git
 	
-	#OFFLINE=True
-	RECLONE=True
+	# If the ``*_PASSWORD`` variables are not set here you will be prompted to enter
+	# values for them by ``stack.sh``and they will be added to ``local.conf``.
+	ADMIN_PASSWORD=admin
+	DATABASE_PASSWORD=admin
+	RABBIT_PASSWORD=admin
+	SERVICE_PASSWORD=$ADMIN_PASSWORD
 	
-	# Define images to be automatically downloaded during the DevStack built process.
-	DOWNLOAD_DEFAULT_IMAGES=False
-	IMAGE_URLS="http://images.trystack.cn/cirros/cirros-0.3.4-x86_64-disk.img"
+	# Neither is set by default.
+	HOST_IP=192.168.56.104
+	#HOST_IPV6=2001:db8::7
 	
-	HOST_IP=10.5.11.51
+	# path of the destination log file.  A timestamp will be appended to the given name.
+	LOGFILE=$DEST/logs/stack.sh.log
 	
+	# Old log files are automatically removed after 7 days to keep things neat.  Change
+	# the number of days by setting ``LOGDAYS``.
+	LOGDAYS=2
 	
-	# Credentials
-	DATABASE_PASSWORD=pass
-	ADMIN_PASSWORD=pass
-	SERVICE_PASSWORD=pass
-	SERVICE_TOKEN=pass
-	RABBIT_PASSWORD=pass
+	HEAT_BRANCH=stable/ocata
+	ENABLED_SERVICES+=,heat,h-api,h-api-cfn,h-api-cw,h-eng
+	enable_service h-eng h-api h-api-cfn h-api-cw
+	#Enable heat plugin
+	enable_plugin heat http://git.trystack.cn/openstack/heat stable/ocata
+	IMAGE_URL_SITE="http://download.fedoraproject.org"
+	IMAGE_URL_PATH="/pub/fedora/linux/releases/25/CloudImages/x86_64/images/"
+	IMAGE_URL_FILE="Fedora-Cloud-Base-25-1.3.x86_64.qcow2"
+	IMAGE_URLS+=","$IMAGE_URL_SITE$IMAGE_URL_PATH$IMAGE_URL_FILE
 	
+	# Using stable/ocata branches
+	# ---------------------------------
+	
+	# Uncomment these to grab the stable/ocata branches from the
+	# repos:
+	CINDER_BRANCH=stable/ocata
+	GLANCE_BRANCH=stable/ocata
 	HORIZON_BRANCH=stable/ocata
 	KEYSTONE_BRANCH=stable/ocata
+	KEYSTONECLIENT_BRANCH=stable/ocata
 	NOVA_BRANCH=stable/ocata
+	NOVACLIENT_BRANCH=stable/ocata
 	NEUTRON_BRANCH=stable/ocata
-	GLANCE_BRANCH=stable/ocata
-	CINDER_BRANCH=stable/ocata
-	
-	
-	#keystone
-	KEYSTONE_TOKEN_FORMAT=UUID
-	
-	##Heat
-	HEAT_BRANCH=stable/ocata
-	enable_service h-eng h-api h-api-cfn h-api-cw
-	
-	
-	## Swift
 	SWIFT_BRANCH=stable/ocata
-	ENABLED_SERVICES+=,s-proxy,s-object,s-container,s-account
+	
+	# Swift is now used as the back-end for the S3-like object store. Setting the
+	# hash value is required and you will be prompted for it if Swift is enabled
+	# so just set it to something already:
+	SWIFT_HASH=66a3d6b56c1f479c8b4e70ab5c2000f5
+	
+	# For development purposes the default of 3 replicas is usually not required.
+	# Set this to 1 to save some resources:
 	SWIFT_REPLICAS=1
-	SWIFT_HASH=011688b44136573e209e
 	
-	
-	# Enabling Neutron (network) Service
-	disable_service n-net
-	enable_service q-svc
-	enable_service q-agt
-	enable_service q-dhcp
-	enable_service q-l3
-	enable_service q-meta
-	enable_service q-metering
-	enable_service neutron
-	
-	## ceilometer
-	enable_service ceilometer ceilometer-acompute ceilometer-acentral ceilometer-anotification ceilometer-collector ceilometer-api
-	
-	## Neutron options
-	Q_USE_SECGROUP=True
-	FLOATING_RANGE="10.5.0.0/16"
-	FIXED_RANGE="10.5.0.0/16"
-	Q_FLOATING_ALLOCATION_POOL=start=10.5.11.55,end=10.5.11.200
-	PUBLIC_NETWORK_GATEWAY="10.5.255.254"
-	Q_L3_ENABLED=True
-	PUBLIC_INTERFACE=eth0
-	Q_USE_PROVIDERNET_FOR_PUBLIC=True
-	OVS_PHYSICAL_BRIDGE=br-ex
-	PUBLIC_BRIDGE=br-ex
-	OVS_BRIDGE_MAPPINGS=public:br-ex
-	
-	# #VLAN configuration.
-	Q_PLUGIN=ml2
-	ENABLE_TENANT_VLANS=True
-	
-	# Logging
-	LOGFILE=/opt/stack/logs/stack.sh.log
-	VERBOSE=True
-	LOG_COLOR=True
-	SCREEN_LOGDIR=/opt/stack/logs
+	# The data for Swift is stored by default in (``$DEST/data/swift``),
+	# or (``$DATA_DIR/swift``) if ``DATA_DIR`` has been set, and can be
+	# moved by setting ``SWIFT_DATA_DIR``. The directory will be created
+	# if it does not exist.
+	SWIFT_DATA_DIR=$DEST/data
+
 
 ### 启动devstack
 
@@ -159,10 +142,17 @@ local.conf 文件配制如下，需要修改相应该的IP
 	source openrc admin admin
 	source openrc demo demo
 
+### 设置镜像源
+由于网络问题 cirros-0.3.4-x86_64-uec.tar.gz , Fedora-Cloud-Base-25-1.3.x86_64.qcow2 可能会出现下载超导致Devstack失败，可以手动先重官网下载好，放入相应的路径下面
+
+	wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-uec.tar.gz -O cirros-0.3.4-x86_64-uec.tar.gz
+
+	wget http://download.fedoraproject.org/pub/fedora/linux/releases/25/CloudImages/x86_64/images/Fedora-Cloud-Base-25-1.3.x86_64.qcow2
+
 ## 参考
-https://docs.openstack.org/devstack/latest/
 
-http://blog.csdn.net/qiqishuang/article/details/51990662
-
+https://docs.openstack.org/heat/latest/getting_started/on_devstack.html  
+https://docs.openstack.org/devstack/latest/  
+http://blog.csdn.net/qiqishuang/article/details/51990662  
 http://blog.csdn.net/debo0531/article/details/71452945?locationNum=2&fps=1
 

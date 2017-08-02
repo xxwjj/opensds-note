@@ -319,14 +319,21 @@ ceph -s 出现如下错误
 	scp $HOME/gopath/bin/osds* opensds-worker-3:/$HOME/gopath/bin
 
 ### 启动
-	#master
-	mkdir /etc/opensds
-	mkdir /var/log/opensds
-	cp $HOME/gopath/src/github.com/opensds/opensds/examples/*.json /etc/opensds/
-	nohup osdslet --endpoint=192.168.56.100:50040 &>> /opensds/osdslet-api-req.log &
+* master
 
-	#worker
-	nohup osdsdock &>> /dev/null &
+		mkdir /etc/opensds
+		mkdir /var/log/opensds
+		cp $HOME/gopath/src/github.com/opensds/opensds/examples/*.json /etc/opensds/
+		nohup osdslet --endpoint=192.168.56.100:50040 &>> /var/log/opensds/osdslet-api.log &
+
+* worker
+
+		nohup osdsdock &>> /dev/null &
+
+* 宿主机
+	
+	nohup socat tcp-listen:50040,reuseaddr,fork tcp:192.168.56.100:50040 &
+
 ### 测试
 #### profile
 list
