@@ -1,0 +1,403 @@
+{
+	"variables": [],
+	"info": {
+		"name": "OpenSDS",
+		"_postman_id": "e55d2938-c43d-f720-fb9c-d4cc0220c76c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "volume",
+			"description": "",
+			"item": [
+				{
+					"name": "list-volumes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"if(responseCode.code === 201 || responseCode.code === 202 || responseCode.code === 200){\r",
+									"    tests[\"查询成功\"] = true;\r",
+									"    console.log(data[0].id)\r",
+									"    postman.setEnvironmentVariable(\"volume_id\", data[0].id);\r",
+									"}else{\r",
+									"    tests[\"查询成功\"] = false;\r",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha/block/volumes",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create-volumes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"if(responseCode.code === 201 || responseCode.code === 202 || responseCode.code === 200){\r",
+									"    tests[\"查询成功\"] = true;\r",
+									"    postman.setEnvironmentVariable(\"volume_id\", data.id);\r",
+									"}else{\r",
+									"    tests[\"查询成功\"] = false;\r",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha/block/volumes",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"vol001\",\r\n    \"description\": \"test vol\",\r\n    \"size\": 1,\r\n    \"profileId\": \"a190a23a-66b8-4a55-a7bb-d18b54830933\"\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete-volumes",
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha/block/volumes/{{volume_id}}",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"spec\": {\r\n        \"profileId\": \"a190a23a-66b8-4a55-a7bb-d18b54830933\"\r\n    }\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get-volume",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"if(responseCode.code === 201 || responseCode.code === 202 || responseCode.code === 200){\r",
+									"    tests[\"查询成功\"] = true;\r",
+									"    postman.setEnvironmentVariable(\"volume_id\", data.id);\r",
+									"}else{\r",
+									"    tests[\"查询成功\"] = false;\r",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha/block/volumes/{{volume_id}}",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "snapshot",
+			"description": "",
+			"item": [
+				{
+					"name": "list-snapshots",
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha/block/snapshots",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "profile",
+			"description": "",
+			"item": [
+				{
+					"name": "delete-profile-extra-key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"if(responseCode.code === 201 || responseCode.code === 202 || responseCode.code === 200){\r",
+									"    tests[\"查询成功\"] = true;\r",
+									"    postman.setEnvironmentVariable(\"volume_id\", data.id);\r",
+									"}else{\r",
+									"    tests[\"查询成功\"] = false;\r",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha1/block/profiles/{{profile_id}}/extras",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"spec\":{\n\t\t\"intervalSnapshot\":\"5s\"\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "add-profile-extra-key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"if(responseCode.code === 201 || responseCode.code === 202 || responseCode.code === 200){\r",
+									"    tests[\"查询成功\"] = true;\r",
+									"    postman.setEnvironmentVariable(\"volume_id\", data.id);\r",
+									"}else{\r",
+									"    tests[\"查询成功\"] = false;\r",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha/profiles/{{profile_id}}/extras",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n\t\"intervalSnapshot\":\"5s\"\n\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get-profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"if(responseCode.code === 201 || responseCode.code === 202 || responseCode.code === 200){\r",
+									"    tests[\"查询成功\"] = true;\r",
+									"    postman.setEnvironmentVariable(\"volume_id\", data.id);\r",
+									"}else{\r",
+									"    tests[\"查询成功\"] = false;\r",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha/profiles/{{profile_id}}",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"spec\":{\n\t\t\"intervalSnapshot\":\"5s\"\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "list-profiles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"if(responseCode.code === 201 || responseCode.code === 202 || responseCode.code === 200){\r",
+									"    tests[\"查询成功\"] = true;\r",
+									"    postman.setEnvironmentVariable(\"volume_id\", data.id);\r",
+									"}else{\r",
+									"    tests[\"查询成功\"] = false;\r",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha/profiles",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"spec\":{\n\t\t\"intervalSnapshot\":\"5s\"\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create-profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"if(responseCode.code === 201 || responseCode.code === 202 || responseCode.code === 200){\r",
+									"    tests[\"查询成功\"] = true;\r",
+									"    postman.setEnvironmentVariable(\"volume_id\", data.id);\r",
+									"}else{\r",
+									"    tests[\"查询成功\"] = false;\r",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha/profiles",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"default\",\r\n    \"description\": \"default policy\",\r\n    \"extra\": {\r\n        \"highAvailability\": \"true\",\r\n        \"intervalSnapshot\": \"5s\",\r\n        \"deleteSnapshotPolicy\": \"true\"\r\n\t}\r\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete-profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"if(responseCode.code === 201 || responseCode.code === 202 || responseCode.code === 200){\r",
+									"    tests[\"查询成功\"] = true;\r",
+									"    postman.setEnvironmentVariable(\"volume_id\", data.id);\r",
+									"}else{\r",
+									"    tests[\"查询成功\"] = false;\r",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{ip}}:50040/api/v1alpha/profiles/{{profile_id}}",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
