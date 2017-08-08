@@ -252,6 +252,14 @@ ceph -s 出现如下错误
 
 `ps -ef|grep ceph` 查看发现有个节点并没有启动osd,后面用 `ceph-deploy osd activate opensds-worker-2:/srv/ceph/osd0 ` 启动即可
 
+#### 目前机器重启会导致ceph无法使用，可参考如下步骤解决
+* 在每个osd节点执行
+
+		losetup /dev/loop1 /home/ceph.img
+		mount /dev/loop1 /srv/ceph/osd0/
+* 在主机节上执行
+
+		ceph-deploy osd activate opensds-worker-1:/srv/ceph/osd0
 
 
 ## flex-plugin && flex-provisioner
