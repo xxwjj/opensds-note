@@ -11,3 +11,5 @@ https://linux.cn/article-3706-1.html
 https://linux.cn/article-3706-2.html
 
 http://kaifly.blog.51cto.com/3209616/1367591
+
+http://openvpn.ustc.edu.cn/
