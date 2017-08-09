@@ -72,7 +72,9 @@ sudo apt-get install polipo
 	sudo sslocal -c shawdowsocks.json -d start
 	export http_proxy="http://127.0.0.1:8123/"
 
-参考配制文件shadowsoks config.json
+### 参考配制文件
+
+shadowsoks config.json
 
 	{
 	    "server":"0.0.0.0",
@@ -97,3 +99,9 @@ shadowsocks client.json
 	    "method":"aes-256-cfb",
 	    "fast_open": true
 	}
+
+
+### 参考文档
+
+http://blog.csdn.net/hanshileiai/article/details/53899612
+
