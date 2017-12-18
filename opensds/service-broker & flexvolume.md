@@ -201,10 +201,10 @@ iscsiadm -m node -p 192.168.56.103:3260 -T iqn.2017-10.io.opensds:volume:0000000
 ```docker ps -a | sed '1d'|awk '{print $1}'|xargs -i{} docker rm -f {}```
 ## 参考链接
 
-https://github.com/kubernetes-incubator/service-catalog/blob/master/docs/install.md
-https://github.com/opensds/nbp/blob/master/service-broker/INSTALL.md
-https://kubernetes.io/docs/tasks/inject-data-application/podpreset/
-https://kubernetes.io/docs/concepts/workloads/pods/podpreset/
+https://github.com/kubernetes-incubator/service-catalog/blob/master/docs/install.md  
+https://github.com/opensds/nbp/blob/master/service-broker/INSTALL.md  
+https://kubernetes.io/docs/tasks/inject-data-application/podpreset/  
+https://kubernetes.io/docs/concepts/workloads/pods/podpreset/  
 
 ## 环境信息:
 
