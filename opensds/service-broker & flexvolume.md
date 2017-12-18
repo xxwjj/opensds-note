@@ -247,9 +247,11 @@ https://kubernetes.io/docs/concepts/workloads/pods/podpreset/
 	 OS/Arch:      linux/amd64
 
 ### WordPress:
-	url: https://github.com/leonwanghui/wordpress
-    代码做了部份修改
+```
+url: https://github.com/leonwanghui/wordpress
+```
 
+代码做了部份修改
 ```bash
 #!/bin/bash
 
