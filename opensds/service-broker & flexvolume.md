@@ -100,7 +100,7 @@ vi examples/podpreset-preset.yaml
 kubectl create -f examples/podpreset-preset.yaml 
 kubectl get podpreset
 ```
-
+yaml文件
 ```yaml
 apiVersion: settings.k8s.io/v1alpha1
 kind: PodPreset
@@ -127,7 +127,7 @@ kubectl create -f examples/Wordpress.yaml
 
 socat tcp-listen:8084,reuseaddr,fork tcp:10.0.0.124:8084
 ```
-
+yaml文件
 ```yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -248,3 +248,28 @@ https://kubernetes.io/docs/concepts/workloads/pods/podpreset/
 
 ### WordPress:
 	url: https://github.com/leonwanghui/wordpress
+    代码做了部份修改
+
+```bash
+#!/bin/bash
+
+mountedDir="/mnt/wordpress"
+path1="/mnt/wordpress/built-in"
+path2="/mnt/wordpress/content"
+file1="/mnt/wordpress/config.json"
+
+if [ ! -d $path1 ]; then
+  cp -r /usr/bin/wordpress/built-in "$mountedDir"
+fi
+
+if [ ! -d $path2 ]; then
+  cp -r /usr/bin/wordpress/content "$mountedDir"
+fi
+
+if [ ! -f $path3 ]; then
+  cp /usr/bin/wordpress/config.json "$mountedDir"
+  chmod +x /mnt/wordpress/config.json
+fi
+
+/usr/bin/wordpress/journey -custom-path="/mnt/wordpress" -log="/mnt/wordpress/log.txt" -http-port=$WORDPRESS_PORT_8084_TCP_PORT
+```
