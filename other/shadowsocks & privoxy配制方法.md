@@ -50,3 +50,5 @@
 	tolerate-pipelining 1
 	socket-timeout 300
 
+### 运行privoxy
+	service privoxy restart
