@@ -2,6 +2,16 @@
 
 ## 操作步骤
 
+#### 安装cfssl
+安装 
+go get -u github.com/cloudflare/cfssl/cmd/...
+
+echo $GOPATH
+/usr/local
+
+ls /usr/local/bin/cfssl*
+cfssl cfssl-bundle cfssl-certinfo cfssljson cfssl-newkey cfssl-scan
+
 ### 启动k8s
 
 * 修改 hack/local-up-cluster.sh 在ADMISSION_CONTROL添加PodPreset
