@@ -78,7 +78,7 @@ ceph 可以通过ceph-deploy搭建，也可以直接通过docker来安装
 	ceph quorum_status
 	ceph mds stat
 	ceph mds dump
-	ceph osd in osd.0 # 把osds 加进集群
+	ceph osd in osd.0 # 把osd加进集群
 ### pool
 * 创建
 
@@ -102,7 +102,7 @@ ceph 删除pool
 mon allow pool delete = true
 添加到[global] section里面。
 2. 重启ceph-mon。
-service ceph-mon
+service ceph-mon restart
 3. 查看修改是否成功。
 ceph -n mon.1 --show-config | grep mon_allow_pool_delete
 4. 删除
