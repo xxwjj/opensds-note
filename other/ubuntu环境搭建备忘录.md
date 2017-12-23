@@ -36,7 +36,10 @@ vim ~/.vnc/xstartup 加入如下配制
 加权限
 
 	sudo chmod +x ~/.vnc/xstartup
-
+### 为了防止被攻击而无法登录，可以修改监听的端口号 vim /usr/bin/vncserver
+	222 #$vncPort = 5900 + $displayNumber;
+	223 $vncPort = 1520 + $displayNumber;
+	
 ### 启动
 
 	vncserver
