@@ -28,13 +28,13 @@
 
 
 * Copy the OpenSDS FlexVolume to k8s kubelet `volume-plugin-dir`.  
-	if you don't specified the volume-plugin-dir, you can execute commands blow:
+	if you don't specify the volume-plugin-dir, you can execute commands blow:
 
 	```
 	mkdir -p /usr/libexec/kubernetes/kubelet-plugins/volume/exec/opensds.io~opensds/
 	cp $GOPATH/src/github.com/opensds/nbp/flexvolume/opensds /usr/libexec/kubernetes/kubelet-plugins/volume/exec/opensds.io~opensds/
 	```  
-	Note: OpenSDS FlexVolume will get the opensds api endpoint from the environment variable `OPENSDS_ENDPOINT`, if you don't specified it, the FlexVloume will use the default vaule: `http://127.0.0.1:50040`. if you want to specified the `OPENSDS_ENDPOINT` executing command `export OPENSDS_ENDPOINT=http://ip:50040` and restart the kubelet.
+	Note: OpenSDS FlexVolume will get the opensds api endpoint from the environment variable `OPENSDS_ENDPOINT`, if you don't specify it, the FlexVloume will use the default vaule: `http://127.0.0.1:50040`. if you want to specify the `OPENSDS_ENDPOINT` executing command `export OPENSDS_ENDPOINT=http://ip:50040` and restart the kubelet.
 
 * Build the Provisioner.
 
@@ -46,9 +46,9 @@
 * Start the Provisioner server.
 	```
 	cd $GOPATH/src/github.com/opensds/nbp/opensds-provisioner/
-	# Tow options need to specified. 
-	# using --master to specified the k8s api server endpoint.
-	# using --endpoint to specified the opensds api server endpoint.
+	# Tow options need to specify. 
+	# using --master to specify the k8s api server endpoint.
+	# using --endpoint to specify the opensds api server endpoint.
 	./opensds-provisioner --master http://127.0.0.1:8080 --endpoint http://192.168.56.100:50040
 	```
 
