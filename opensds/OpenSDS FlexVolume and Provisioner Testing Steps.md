@@ -34,7 +34,7 @@
 	mkdir -p /usr/libexec/kubernetes/kubelet-plugins/volume/exec/opensds.io~opensds/
 	cp $GOPATH/src/github.com/opensds/nbp/flexvolume/opensds /usr/libexec/kubernetes/kubelet-plugins/volume/exec/opensds.io~opensds/
 	```  
-	Note: OpenSDS FlexVolume will get the opensds api endpoint from the environment variable OPENSDS_POINT, if you don't specified it, The FlexVloume will use the default vaule: `http://127.0.0.1:50040`. if you want to specified the OPENSDS_POINT executing command '(eg. `export OPENSDS_POINT=http://ip:50040`)' and specified restart the kubelet.
+	Note: OpenSDS FlexVolume will get the opensds api endpoint from the environment variable OPENSDS_ENDPOINT, if you don't specified it, the FlexVloume will use the default vaule: `http://127.0.0.1:50040`. if you want to specified the OPENSDS_ENDPOINT executing command `export OPENSDS_ENDPOINT=http://ip:50040` and restart the kubelet.
 
 * Build the Provisioner.
 
