@@ -1,9 +1,42 @@
 # OpenSDS FlexVolume and Provisioner Testing Steps #
 
 ## Prerequisite ##
-1. kubernetes cluster.
-2. opensds cluster.
-3. golang environment.
+### [golang](https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz) 
+* Version infomation
+
+	```
+	root@proxy:~# go version
+	go version go1.9.2 linux/amd64
+	```
+
+* You can install golang by excuting command blow:
+
+	```
+	wget https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
+	tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz
+	export PATH=$PATH:/usr/local/go/bin
+	export GOROOT=$HOME/gopath
+	```
+
+### [kubernetes](https://github.com/kubernetes/kubernetes) local cluster
+* Version infomation
+	```
+	root@proxy:~# kubectl version
+	Client Version: version.Info{Major:"1", Minor:"9+", GitVersion:"v1.9.0-beta.0-dirty", GitCommit:"a0fb3baa71f1559fd42d1acd9cbdd8a55ab4dfff", GitTreeState:"dirty", BuildDate:"2017-12-13T09:22:09Z", GoVersion:"go1.9.2", Compiler:"gc", Platform:"linux/amd64"}
+	Server Version: version.Info{Major:"1", Minor:"9+", GitVersion:"v1.9.0-beta.0-dirty", GitCommit:"a0fb3baa71f1559fd42d1acd9cbdd8a55ab4dfff", GitTreeState:"dirty", BuildDate:"2017-12-13T09:22:09Z", GoVersion:"go1.9.2", Compiler:"gc", Platform:"linux/amd64"}
+	```
+* You can startup the k8s local cluster by excuting command blow:
+
+	```
+	git clone https://github.com/kubernetes/kubernetes.git
+	cd kubernetes
+	git co v1.9.0-beta.0
+	make
+	RUNTIME_CONFIG=settings.k8s.io/v1alpha1=true AUTHORIZATION_MODE=Node,RBAC hack/local-up-cluster.sh -O
+	```
+
+### [opensds](https://github.com/opensds/opensds) local cluster
+For testing you can deploy OpenSDS referring [Local Cluster Installation with LVM](https://github.com/opensds/opensds/wiki/Local-Cluster-Installation-with-LVM) wiki.
 
 ## Operation steps ##
 * Download the nbp resource code.
@@ -34,7 +67,7 @@
 	mkdir -p /usr/libexec/kubernetes/kubelet-plugins/volume/exec/opensds.io~opensds/
 	cp $GOPATH/src/github.com/opensds/nbp/flexvolume/opensds /usr/libexec/kubernetes/kubelet-plugins/volume/exec/opensds.io~opensds/
 	```  
-	Note: OpenSDS FlexVolume will get the opensds api endpoint from the environment variable `OPENSDS_ENDPOINT`, if you don't specify it, the FlexVloume will use the default vaule: `http://127.0.0.1:50040`. if you want to specify the `OPENSDS_ENDPOINT` executing command `export OPENSDS_ENDPOINT=http://ip:50040` and restart the kubelet.
+	Note: OpenSDS FlexVolume will get the opensds api endpoint from the environment variable `OPENSDS_ENDPOINT`, if you don't specify it, the FlexVloume will use the default vaule: `http://127.0.0.1:50040`. if you want to specify the `OPENSDS_ENDPOINT` executing command `export OPENSDS_ENDPOINT=http://ip:50040` and restart the k8s local cluster.
 
 * Build the Provisioner.
 
