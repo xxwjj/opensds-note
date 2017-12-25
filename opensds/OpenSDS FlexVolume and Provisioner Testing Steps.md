@@ -9,7 +9,7 @@
 	go version go1.9.2 linux/amd64
 	```
 
-* You can install golang by excuting command blow:
+* You can install golang by excuting commands blow:
 
 	```
 	wget https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
@@ -25,7 +25,7 @@
 	Client Version: version.Info{Major:"1", Minor:"9+", GitVersion:"v1.9.0-beta.0-dirty", GitCommit:"a0fb3baa71f1559fd42d1acd9cbdd8a55ab4dfff", GitTreeState:"dirty", BuildDate:"2017-12-13T09:22:09Z", GoVersion:"go1.9.2", Compiler:"gc", Platform:"linux/amd64"}
 	Server Version: version.Info{Major:"1", Minor:"9+", GitVersion:"v1.9.0-beta.0-dirty", GitCommit:"a0fb3baa71f1559fd42d1acd9cbdd8a55ab4dfff", GitTreeState:"dirty", BuildDate:"2017-12-13T09:22:09Z", GoVersion:"go1.9.2", Compiler:"gc", Platform:"linux/amd64"}
 	```
-* You can startup the k8s local cluster by excuting command blow:
+* You can startup the k8s local cluster by excuting commands blow:
 
 	```
 	git clone https://github.com/kubernetes/kubernetes.git
