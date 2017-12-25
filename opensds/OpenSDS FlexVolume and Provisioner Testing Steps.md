@@ -54,11 +54,11 @@
 
 * You can use the following cammands to test the OpenSDS Proversion and FlexVolume Functions.
 
-```
-cd $GOPATH/src/github.com/opensds/nbp/opensds-provisioner/examples
-kubectl create -f sc.yaml              # Create StorageClass
-kubectl create -f pvc.yaml             # Create PVC
-kubectl create -f pod-application.yaml # Create busybox Pod and mount the block storage.
-```
-
-Execute the `findmnt|grep opensds` to confirm whether the volume has been provided.
+	```
+	cd $GOPATH/src/github.com/opensds/nbp/opensds-provisioner/examples
+	kubectl create -f sc.yaml              # Create StorageClass
+	kubectl create -f pvc.yaml             # Create PVC
+	kubectl create -f pod-application.yaml # Create busybox Pod and mount the block storage.
+	```
+	
+	Execute the `findmnt|grep opensds` to confirm whether the volume has been provided.
