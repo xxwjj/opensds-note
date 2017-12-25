@@ -52,7 +52,7 @@
 	./opensds-provisioner --master http://127.0.0.1:8080 --endpoint http://192.168.56.100:50040
 	```
 
-* You can use the following cammands to test the OpenSDS Proversion and FlexVolume Functions.
+* You can use the following cammands to test the OpenSDS Proversioner and FlexVolume functions.
 
 	```
 	cd $GOPATH/src/github.com/opensds/nbp/opensds-provisioner/examples
