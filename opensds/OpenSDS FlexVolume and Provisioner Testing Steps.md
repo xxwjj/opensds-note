@@ -1,6 +1,36 @@
 # OpenSDS FlexVolume and Provisioner Testing Steps #
 
 ## Prerequisite ##
+### ubuntu
+* Version infomation
+
+	```
+	root@proxy:~# cat /etc/issue
+	Ubuntu 16.04.2 LTS \n \l
+
+	```
+### docker
+* Version information
+
+	```
+	root@proxy:~# docker version 
+	Client:
+	 Version:      1.12.6
+	 API version:  1.24
+	 Go version:   go1.6.2
+	 Git commit:   78d1802
+	 Built:        Tue Jan 31 23:35:14 2017
+	 OS/Arch:      linux/amd64
+	
+	Server:
+	 Version:      1.12.6
+	 API version:  1.24
+	 Go version:   go1.6.2
+	 Git commit:   78d1802
+	 Built:        Tue Jan 31 23:35:14 2017
+	 OS/Arch:      linux/amd64
+	```
+
 ### [golang](https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz) 
 * Version infomation
 
@@ -15,7 +45,7 @@
 	wget https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
 	tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz
 	export PATH=$PATH:/usr/local/go/bin
-	export GOROOT=$HOME/gopath
+	export GOPATH=$HOME/gopath
 	```
 
 ### [kubernetes](https://github.com/kubernetes/kubernetes) local cluster
@@ -30,7 +60,7 @@
 	```
 	git clone https://github.com/kubernetes/kubernetes.git
 	cd kubernetes
-	git co v1.9.0-beta.0
+	git checkout v1.9.0-beta.0
 	make
 	RUNTIME_CONFIG=settings.k8s.io/v1alpha1=true AUTHORIZATION_MODE=Node,RBAC hack/local-up-cluster.sh -O
 	```
@@ -38,7 +68,7 @@
 ### [opensds](https://github.com/opensds/opensds) local cluster
 For testing you can deploy OpenSDS referring [Local Cluster Installation with LVM](https://github.com/opensds/opensds/wiki/Local-Cluster-Installation-with-LVM) wiki.
 
-## Operation steps ##
+## Testing steps ##
 * Download the nbp resource code.
 	
 	using go get  
@@ -69,29 +99,43 @@ For testing you can deploy OpenSDS referring [Local Cluster Installation with LV
 	```  
 	Note: OpenSDS FlexVolume will get the opensds api endpoint from the environment variable `OPENSDS_ENDPOINT`, if you don't specify it, the FlexVloume will use the default vaule: `http://127.0.0.1:50040`. if you want to specify the `OPENSDS_ENDPOINT` executing command `export OPENSDS_ENDPOINT=http://ip:50040` and restart the k8s local cluster.
 
-* Build the Provisioner.
+* Build the provisioner docker image.
 
 	```
 	cd $GOPATH/src/github.com/opensds/nbp/opensds-provisioner/
-	make
+	make container
 	```
 
-* Start the Provisioner server.
-	```
-	cd $GOPATH/src/github.com/opensds/nbp/opensds-provisioner/
-	# Tow options need to specify. 
-	# using --master to specify the k8s api server endpoint.
-	# using --endpoint to specify the opensds api server endpoint.
-	./opensds-provisioner --master http://127.0.0.1:8080 --endpoint http://192.168.56.100:50040
-	```
-
-* You can use the following cammands to test the OpenSDS Proversioner and FlexVolume functions.
-
+* Create service account, role and bind them.
 	```
 	cd $GOPATH/src/github.com/opensds/nbp/opensds-provisioner/examples
+	kubectl create -f serviceaccount.yaml
+	kubectl create -f clusterrole.yaml
+	kubectl create -f clusterrolebinding.yaml
+	```
+* Create provisioner pod.
+	```
+	kubectl create -f pod-provisioner.yaml
+	```
+* You can use the following cammands to test the OpenSDS FlexVolume and Proversioner functions.
+
+	```
 	kubectl create -f sc.yaml              # Create StorageClass
 	kubectl create -f pvc.yaml             # Create PVC
-	kubectl create -f pod-application.yaml # Create busybox Pod and mount the block storage.
+	kubectl create -f pod-application.yaml # Create busybox pod and mount the block storage.
 	```
 	
 	Execute the `findmnt|grep opensds` to confirm whether the volume has been provided.
+
+## Clean steps ##
+
+```
+kubectl delete -f pod-application.yaml
+kubectl delete -f pvc.yaml
+kubectl delete -f sc.yaml
+
+kubectl delete -f pod-provisioner.yaml
+kubectl delete -f clusterrolebinding.yaml
+kubectl delete -f clusterrole.yaml
+kubectl delete -f serviceaccount.yaml
+```
