@@ -1,46 +1,51 @@
 # shadowsock install
 
-### °²×° BBR
-¿É²Î¿¼ÎÄµµ£ºhttps://teddysun.com/489.html
+### å®‰è£… BBR
+å¯å‚è€ƒæ–‡æ¡£ï¼šhttps://teddysun.com/489.html
 
-Ê¹ÓÃrootÓÃ»§µÇÂ¼£¬ÔËĞĞÒÔÏÂÃüÁî£º
+ä½¿ç”¨rootç”¨æˆ·ç™»å½•ï¼Œè¿è¡Œä»¥ä¸‹å‘½ä»¤ï¼š
 ```
 wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
 chmod +x bbr.sh
 ./bbr.sh
 ```
-°²×°Íê³Éºó£¬½Å±¾»áÌáÊ¾ĞèÒªÖØÆô VPS£¬ÊäÈë y ²¢»Ø³µºóÖØÆô¡£
-ÖØÆôÍê³Éºó£¬½øÈë VPS£¬ÑéÖ¤Ò»ÏÂÊÇ·ñ³É¹¦°²×°×îĞÂÄÚºË²¢¿ªÆô TCP BBR£¬ÊäÈëÒÔÏÂÃüÁî£º
+å®‰è£…å®Œæˆåï¼Œè„šæœ¬ä¼šæç¤ºéœ€è¦é‡å¯ VPSï¼Œè¾“å…¥ y å¹¶å›è½¦åé‡å¯ã€‚
+é‡å¯å®Œæˆåï¼Œè¿›å…¥ VPSï¼ŒéªŒè¯ä¸€ä¸‹æ˜¯å¦æˆåŠŸå®‰è£…æœ€æ–°å†…æ ¸å¹¶å¼€å¯ TCP BBRï¼Œè¾“å…¥ä»¥ä¸‹å‘½ä»¤ï¼š
 ```
 uname -r
 ```
-²é¿´ÄÚºË°æ±¾£¬º¬ÓĞ 4.10 ¾Í±íÊ¾ OK ÁË
+æŸ¥çœ‹å†…æ ¸ç‰ˆæœ¬ï¼Œå«æœ‰ 4.10 å°±è¡¨ç¤º OK äº†
 ```
 sysctl net.ipv4.tcp_available_congestion_control
 ```
-·µ»ØÖµÒ»°ãÎª£º
+è¿”å›å€¼ä¸€èˆ¬ä¸ºï¼š
 ```
 net.ipv4.tcp_available_congestion_control = bbr cubic reno
 ```
 ```
 sysctl net.ipv4.tcp_congestion_control
 ```
-·µ»ØÖµÒ»°ãÎª£º
+è¿”å›å€¼ä¸€èˆ¬ä¸ºï¼š
 ```
 net.ipv4.tcp_congestion_control = bbr
 ```
 ```
 sysctl net.core.default_qdisc
 ```
-·µ»ØÖµÒ»°ãÎª£º
+è¿”å›å€¼ä¸€èˆ¬ä¸ºï¼š
 ```
 net.core.default_qdisc = fq
 ```
 ```
 lsmod | grep bbr
 ```
-·µ»ØÖµÓĞ tcp_bbr Ä£¿é¼´ËµÃ÷bbrÒÑÆô¶¯
+è¿”å›å€¼æœ‰ tcp_bbr æ¨¡å—å³è¯´æ˜bbrå·²å¯åŠ¨
 
-### shadownsock°²×°·½·¨
-²Î¿¼£ºhttps://teddysun.com/486.html
+### shadownsockå®‰è£…æ–¹æ³•
+å‚è€ƒï¼š
+
+https://teddysun.com/486.html
+
+
+https://www.nnbbxx.net/post-7022.html
 
