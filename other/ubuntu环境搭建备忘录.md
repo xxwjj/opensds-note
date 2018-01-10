@@ -60,3 +60,15 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vn
 ### 参考
 http://blog.csdn.net/yuchao2015/article/details/52132270
 
+
+## 网络设置
+新部署的三台服务器也需要通过本台服务器访问外网，因此需要通过iptables设置nat来访问外网，命令如下
+```
+sudo iptables -A INPUT -i enp2s0f1 -j ACCEPT
+sudo iptables -t nat -A POSTROUTING -s 10.10.0.0/16  -o enp2s0f0 -j MASQUERADE
+```
+
+其它10.10.0.0网段环境访问跳转服务器上的虚拟机，网络配制如下
+```
+sudo iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -d 192.168.56.0/24 -o vboxnet0 -j MASQUERADE
+```
