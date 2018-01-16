@@ -1,19 +1,16 @@
-# OpenSDS FlexVolume and Provisioner Testing Steps #
-
 ## Prerequisite ##
 ### ubuntu
-* Version infomation
+* Version information
 
 	```
 	root@proxy:~# cat /etc/issue
 	Ubuntu 16.04.2 LTS \n \l
-
 	```
 ### docker
 * Version information
 
 	```
-	root@proxy:~# docker version 
+	root@proxy:~# docker version
 	Client:
 	 Version:      1.12.6
 	 API version:  1.24
@@ -32,14 +29,14 @@
 	```
 
 ### [golang](https://redirector.gvt1.com/edgedl/go/go1.9.2.linux-amd64.tar.gz) 
-* Version infomation
+* Version information
 
 	```
 	root@proxy:~# go version
 	go version go1.9.2 linux/amd64
 	```
 
-* You can install golang by excuting commands blow:
+* You can install golang by executing commands blow:
 
 	```
 	wget https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
@@ -49,27 +46,35 @@
 	```
 
 ### [kubernetes](https://github.com/kubernetes/kubernetes) local cluster
-* Version infomation
+* Version information
 	```
 	root@proxy:~# kubectl version
 	Client Version: version.Info{Major:"1", Minor:"9+", GitVersion:"v1.9.0-beta.0-dirty", GitCommit:"a0fb3baa71f1559fd42d1acd9cbdd8a55ab4dfff", GitTreeState:"dirty", BuildDate:"2017-12-13T09:22:09Z", GoVersion:"go1.9.2", Compiler:"gc", Platform:"linux/amd64"}
 	Server Version: version.Info{Major:"1", Minor:"9+", GitVersion:"v1.9.0-beta.0-dirty", GitCommit:"a0fb3baa71f1559fd42d1acd9cbdd8a55ab4dfff", GitTreeState:"dirty", BuildDate:"2017-12-13T09:22:09Z", GoVersion:"go1.9.2", Compiler:"gc", Platform:"linux/amd64"}
 	```
-* You can startup the k8s local cluster by excuting commands blow:
+* You can startup the k8s local cluster by executing commands blow:
 
 	```
+	cd $HOME
 	git clone https://github.com/kubernetes/kubernetes.git
-	cd kubernetes
-	git checkout v1.9.0-beta.0
+	cd $HOME/kubernetes
+	git checkout v1.9.0
 	make
+	echo alias kubectl='$HOME/kubernetes/cluster/kubectl.sh' >> /etc/profile
 	RUNTIME_CONFIG=settings.k8s.io/v1alpha1=true AUTHORIZATION_MODE=Node,RBAC hack/local-up-cluster.sh -O
 	```
 
+
 ### [opensds](https://github.com/opensds/opensds) local cluster
-For testing you can deploy OpenSDS referring [Local Cluster Installation with LVM](https://github.com/opensds/opensds/wiki/Local-Cluster-Installation-with-LVM) wiki.
+* For testing purposes you can deploy OpenSDS referring the [Local Cluster Installation with LVM](https://github.com/opensds/opensds/wiki/Local-Cluster-Installation-with-LVM) wiki.
 
 ## Testing steps ##
-* Download the nbp resource code.
+* Load some ENVs which is setted before.
+
+    ```
+    source /etc/profile
+    ```
+* Download nbp source code.
 	
 	using go get  
 	```
@@ -117,6 +122,24 @@ For testing you can deploy OpenSDS referring [Local Cluster Installation with LV
 	```
 	kubectl create -f pod-provisioner.yaml
 	```
+* Change the opensds endpoint IP in pod-provisioner.yaml   
+The IP (192.168.56.106) should be replaced with the OpenSDS osdslet actual endpoint IP.
+    ```yaml
+    kind: Pod
+    apiVersion: v1
+    metadata:
+      name: opensds-provisioner
+    spec:
+      serviceAccount: opensds-provisioner
+      containers:
+        - name: opensds-provisioner
+          image: opensdsio/opensds-provisioner
+          securityContext:
+          args:
+            - "-endpoint=http://192.168.56.106:50040" # should be replaced
+          imagePullPolicy: "IfNotPresent"
+    ```
+
 * You can use the following cammands to test the OpenSDS FlexVolume and Proversioner functions.
 
 	```
