@@ -1,8 +1,45 @@
 # OpenSDS service-broker and FlexVolume show #
 
 ## 操作步骤
+### 版本
 
-#### 安装cfssl
+k8s
+```
+root@proxy:~# kubectl version
+Client Version: version.Info{Major:"1", Minor:"9+", GitVersion:"v1.9.0-beta.0-dirty", GitCommit:"a0fb3baa71f1559fd42d1acd9cbdd8a55ab4dfff", GitTreeState:"dirty", BuildDate:"2017-12-13T09:22:09Z", GoVersion:"go1.9.2", Compiler:"gc", Platform:"linux/amd64"}
+Server Version: version.Info{Major:"1", Minor:"9+", GitVersion:"v1.9.0-beta.0-dirty", GitCommit:"a0fb3baa71f1559fd42d1acd9cbdd8a55ab4dfff", GitTreeState:"dirty", BuildDate:"2017-12-13T09:22:09Z", GoVersion:"go1.9.2", Compiler:"gc", Platform:"linux/amd64"}
+```
+
+docker
+```
+root@proxy:~# docker version 
+Client:
+ Version:      1.12.6
+ API version:  1.24
+ Go version:   go1.6.2
+ Git commit:   78d1802
+ Built:        Tue Jan 31 23:35:14 2017
+ OS/Arch:      linux/amd64
+
+Server:
+ Version:      1.12.6
+ API version:  1.24
+ Go version:   go1.6.2
+ Git commit:   78d1802
+ Built:        Tue Jan 31 23:35:14 2017
+ OS/Arch:      linux/amd64
+```
+
+ubuntu
+```
+root@proxy:~# cat /etc/issue
+Ubuntu 16.04.2 LTS \n \l
+```
+
+
+
+
+### 安装cfssl
 安装 
 go get -u github.com/cloudflare/cfssl/cmd/...
 
