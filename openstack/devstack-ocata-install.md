@@ -53,7 +53,7 @@ devstack 安装pip有问题，可以直接通过命令下载，并copy到对应�
 	wget  https://bootstrap.pypa.io/get-pip.py
 	cp get-pip.py /home/devstack/files/
 
-### 设置pip 源 需要分别配制 `/root/.pip/pip.conf` `/home/stack/.pip/pip.conf`
+### 设置pip 源 需要分别配制 `/root/.pip/pip.conf` `/opt/stack/.pip/pip.conf`
 
 	[global]
 	index-url = http://mirrors.aliyun.com/pypi/simple/
