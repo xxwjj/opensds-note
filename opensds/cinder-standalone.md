@@ -24,9 +24,19 @@
 ## install cinder standalone
 ### download cinder source code
 
-	mkgit ~/cinder-standalone
+	mkdir ~/cinder-standalone
 	cd ~/cinder-standalone
 	git clone https://github.com/openstack/cinder.git
+### Modified the Makefile (vim ~/cinder-standalone/contrib/block-box)
+The testing ENV is ubuntu:xenial, so you should repalce the PLATFORM variable 
+from
+```	
+PLATFORM ?= debian:stretch# ubuntu:xenial, centos:7
+```
+to
+```
+PLATFORM ?= ubuntu:xenial
+```
 
 ### build docker images
 
