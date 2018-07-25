@@ -102,7 +102,7 @@ execute command
 ### vim /etc/opensds/opensds.conf
 	[osdsdock]
 	...
-	enabled_backends = sample
+	enabled_backends = cinder
 	...
 	[cinder]
 	name = cinder
