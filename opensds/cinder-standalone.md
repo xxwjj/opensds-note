@@ -44,7 +44,7 @@ I have pushed created images in dockerhub, you can pull it instead of building.
 
 
 vi  create_vg.sh 
-```
+```bash
 #!/bin/bash
 function _create_lvm_volume_group {
     local vg=$1
@@ -129,7 +129,7 @@ pool:
       advanced:
         diskType: SSD
         latency: 3ms
-'''
+```
 
 ### set osdsctl ENV variable.
     export OPENSDS_AUTH_STRATEGY=noauth
