@@ -1,7 +1,5 @@
 # **cinder-standalone** #
 
-[TOC]
-
 ## install docker (install the newest version maybe better.)
 	wget -qO- https://get.docker.com/ | sh
 	
@@ -43,15 +41,18 @@ I have pushed created images in dockerhub, you can pull it instead of building.
 	docker tag xxwjj/lvm-debian-cinder lvm-debian-cinder:latest
 
 ### create cinder lvm backend volume group
+
+
+vi  create_vg.sh 
 ```
-cat >> create_vg.sh << HERE_DOC_CREATE_VG
 #!/bin/bash
 function _create_lvm_volume_group {
     local vg=$1
     local size=$2
 
     local backing_file=/opt/opensds/cinder/cinder-volume.img
-    if ! sudo vgs $vg; then
+	mkdir /opt/opensds/cinder/ -p
+    if ! sudo vgs $vg &> /dev/null ; then
         # Only create if the file doesn't already exists
         [[ -f $backing_file ]] || truncate -s $size $backing_file
         local vg_dev
@@ -69,18 +70,68 @@ function _create_lvm_volume_group {
     fi
 }
 modprobe dm_thin_pool
-_create_lvm_volume_group cinder-volume 10G
-HERE_DOC_CREATE_VG
-chmod +x create_vg.sh
-./create_vg.sh
+_create_lvm_volume_group cinder-volumes 10G
 ```
+execute command
+
+	chmod +x create_vg.sh
+	./create_vg.sh
+
 
 ### startup cinder-standalone
 	cd cinder-standlone/cinder/contrib/block-box/
 	docker-compose up 
 
+### install cinder CLI
+	wget https://bootstrap.pypa.io/get-pip.py
+	python get-get.py
+	pip install python-cinderclient
 
-## set osdsctl ENV variable.
+
+## Set the cinder-standalone as the opensds backend.
+### vim /etc/opensds/opensds.conf
+	[osdsdock]
+	...
+	enabled_backends = sample
+	...
+	[cinder]
+	name = cinder
+	description = Cinder Test
+	driver_name = cinder
+	config_path = /etc/opensds/driver/cinder.yaml
+### vim /etc/opensds/driver/cinder.yaml
+
+```yaml
+authOptions:
+  noAuth: true
+  endpoint: "http://127.0.0.1/identity"
+  cinderEndpoint: "http://127.0.0.1:8776/v2"
+  domainId: "Default"
+  domainName: "Default"
+  username: ""
+  password: ""
+  tenantId: "myproject"
+  tenantName: "myproject"
+pool:
+  # The pool name must be same as the pool name in cinder, you can run command
+  # 'cinder get-pools' to get.
+  "cinder-lvm@lvm#lvm":
+    storageType: block
+    availabilityZone: default
+    extras:
+      dataStorage:
+        provisioningPolicy: Thin
+        isSpaceEfficient: false
+      ioConnectivity:
+        accessProtocol: iscsi
+        maxIOPS: 7000000
+        maxBWS: 600
+      advanced:
+        diskType: SSD
+        latency: 3ms
+'''
+
+### set osdsctl ENV variable.
     export OPENSDS_AUTH_STRATEGY=noauth
     export OPENSDS_ENDPOINT=http://127.0.0.1:50040
 
