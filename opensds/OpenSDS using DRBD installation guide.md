@@ -1,8 +1,8 @@
 # OpenSDS using DRBD installation guide
 ## System requirements
-Two nodes are requirements for this deployments scenario: primary node and secondary node.
-For primary node, we need to install all opensds component :osdslet, osdsdock(provisioner, attacher), etcd and drbd.
-For secondary node, we need to install osdsdock (provisioner attacher) and drbd.
+Two nodes are requirements for this deployments scenario: primary node and secondary node.  
+For primary node, we need to install all opensds component :osdslet, osdsdock(provisioner, attacher), etcd and drbd.  
+For secondary node, we need to install osdsdock (provisioner attacher) and drbd.  
 
 ## Deploy in two nodes.
 ### OpenSDS installation
@@ -49,9 +49,10 @@ Hosts:
 ```
 killall osdsdock
 osdsdock --logtostderr -v 8
-
+```
 ### osdsdock attacher installation.
 #### Add osdsdock-attacher configuration file.
+
 vim /etc/opensds/attacher.conf
 
 ```
@@ -69,7 +70,7 @@ driver = etcd
 osdsdock --config-file /etc/opensds/attacher.conf --logtostderr -v 8
 ```
 
-```
+
 ## configuration node secondary node.
 ### stop all services of opensds
 ```
