@@ -95,6 +95,8 @@ execute command
 ### install cinder CLI
 	wget https://bootstrap.pypa.io/get-pip.py
 	python get-get.py
+	# Do not use apt-get to install python-cinderclient , becuase it will 
+	# install old version which is not supoort noauth feature
 	pip install python-cinderclient
 
 
