@@ -191,7 +191,7 @@ Enter the multi-cloud repo directory you downloaded before(eg. ```cd $GOPATH/git
       MICRO_SERVER_ADDRESS: ":8089"
       MICRO_REGISTRY: "mdns"
       OS_AUTH_AUTHSTRATEGY: "keystone" # replace keystone with auth
-	  # If you are using noauth mode, following items do not work, ignore it. 
+      # If you are using noauth mode, following items do not work, ignore it. 
       OS_AUTH_URL: "http://10.10.3.100/identity"
       OS_USER_DOMIN_ID: "Default"
       OS_USERNAME: "multicloud"
