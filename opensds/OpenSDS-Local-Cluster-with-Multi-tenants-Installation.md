@@ -40,12 +40,12 @@ It will take a 10~15 minutes depending on the speed of your internet connection.
 ### Dashboard
 
 ```
-docker run -d --net=host opensdsio/dashboard:latest --name opensds-dashboard
+docker run -d --net=host --name opensds-dashborad opensdsio/dashboard:latest
 ```
 
 ## Testing
 ### Testing local cluster using dashboard.
-Open you browser and input some url like this: http://hostIP:8088 to enter OpenSDS dashboard. The following is the initial account for administrator user:
+Open you browser and input dashboard URL: http://hostIP:8088 to enter OpenSDS dashboard. Following is the initial account for administrator user:
 ```
 UserName: admin
 Password: opensds@123
@@ -54,7 +54,7 @@ Password: opensds@123
 We have provided CLI for OpenSDS(HotPot), if you simply want to testing OpenSDS(Hotpot), and do not want to deploy dashboard, CLI is a good choice.
 #### Config osdsctl tool.
 ```shell
-sudo cp build/out/bin/osdsctl /usr/local/bin
+sudo cp $GOPATH/src/github.com/opensds/opensds/build/out/bin/osdsctl /usr/local/bin
 ```
 
 #### Set some environment variables.
@@ -102,11 +102,11 @@ cd $GOPATH/src/github.com/opensds/opensds && script/devsds/uninstall.sh -purge
 ### Multi-Cloud
 ```
 cd $GOPATH/src/github.com/opensds/multi-cloud
-docker-composer down
+docker-compose down
 ```
 ### Dashboard
 ```
-docker stop opensds-dashboard
-docker rm opensds-dashboard
+docker stop opensds-dashborad
+docker rm opensds-dashborad
 ```
 Hope you could enjoy it, and more suggestions are welcomed!
