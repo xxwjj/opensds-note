@@ -45,7 +45,7 @@ docker run -d --net=host --name opensds-dashborad opensdsio/dashboard:latest
 
 ## Testing
 ### Testing local cluster using dashboard.
-Open you browser and input dashboard URL: http://hostIP:8088 to enter OpenSDS dashboard. Following is the initial account for administrator user:
+Open your browser and input dashboard URL: http://hostIP:8088 to enter OpenSDS dashboard. Following is the initial account for administrator user:
 ```
 UserName: admin
 Password: opensds@123
