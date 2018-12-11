@@ -261,7 +261,19 @@ ceph -s 出现如下错误
 
 		ceph-deploy osd activate opensds-worker-1:/srv/ceph/osd0
 
+### ceph rados gw 安装 方法
+#### 参考如下安装 ：
+http://docs.ceph.com/docs/luminous/install/install-ceph-gateway/
 
+#### 安装完成查看默认zonegroup
+'''
+radosgw-admin zonegroup get
+'''
+#### ak/sk
+```
+radosgw-admin user create --system --uid=admin --display-name=admin --rgw-zone=default --rgw-zonegroup=default --caps=users=*;buckets=*;zone=*;metadata=*;usage=*
+radosgw-admin user create --uid="testuser" --display-name="First User"
+```
 ## flex-plugin && flex-provisioner
 	go get github.com/leonwanghui/opensds-k8s/cmd/flex-plugin/opensds
 	go install github.com/leonwanghui/opensds-k8s/cmd/flex-plugin/opensds
