@@ -96,9 +96,9 @@ local.conf 文件配制如下，需要修改相应该的IP
 	enable_service h-eng h-api h-api-cfn h-api-cw
 	#Enable heat plugin
 	enable_plugin heat http://git.trystack.cn/openstack/heat stable/ocata
-	IMAGE_URL_SITE="http://download.fedoraproject.org"
-	IMAGE_URL_PATH="/pub/fedora/linux/releases/25/CloudImages/x86_64/images/"
-	IMAGE_URL_FILE="Fedora-Cloud-Base-25-1.3.x86_64.qcow2"
+	IMAGE_URL_SITE="https://mirrors.tuna.tsinghua.edu.cn"
+	IMAGE_URL_PATH="/fedora/releases/27/CloudImages/x86_64/images/"
+	IMAGE_URL_FILE="Fedora-Cloud-Base-27-1.6.x86_64.qcow2"
 	IMAGE_URLS+=","$IMAGE_URL_SITE$IMAGE_URL_PATH$IMAGE_URL_FILE
 	
 	# Using stable/ocata branches
@@ -147,7 +147,7 @@ local.conf 文件配制如下，需要修改相应该的IP
 
 	wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-uec.tar.gz -O cirros-0.3.4-x86_64-uec.tar.gz
 
-	wget http://download.fedoraproject.org/pub/fedora/linux/releases/25/CloudImages/x86_64/images/Fedora-Cloud-Base-25-1.3.x86_64.qcow2
+	wget https://mirrors.tuna.tsinghua.edu.cn/fedora/releases/27/CloudImages/x86_64/images/Fedora-Cloud-Base-27-1.6.x86_64.qcow2
 
 ## 参考
 
