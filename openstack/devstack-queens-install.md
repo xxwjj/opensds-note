@@ -1,4 +1,4 @@
-# devstack ocata 版本安装方法 #
+# devstack queens 版本安装方法 #
 
 ## 环境信息
 * ubuntu 16.04
@@ -34,9 +34,7 @@ vim /etc/apt/source.list 替换成如下配制
 
 
 ### 下载devstack 切换到queens版本
-* 方法1  
-
-    	git clone http://git.trystack.cn/openstack-dev/devstack.git -b stable/queens  
+	git clone http://git.trystack.cn/openstack-dev/devstack.git -b stable/queens  
 
 
 ### 设置pip 源 需要分别配制 `/root/.pip/pip.conf` `/opt/stack/.pip/pip.conf`
