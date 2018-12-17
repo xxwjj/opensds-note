@@ -15,8 +15,7 @@ ssh-copy-id ceph-rgw
 ``` 
 ## cephy mon osd depoly
 
-###create working directory
-* create working directory.
+### create working directory
 ```
 mkdir my-cluster
 cd my-cluster
