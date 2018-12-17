@@ -115,5 +115,6 @@ for bucket in conn.get_all_buckets():
 )
 ```
 
-
+### reference dock
+http://docs.ceph.com/docs/master/start/quick-ceph-deploy/
 
