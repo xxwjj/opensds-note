@@ -13,7 +13,7 @@ drbdadm status
 ### create replication pair
 * add a configruation file like blow:
 vim /etc/drbd.d/resourcename.res
-```json
+```
 # meta-data-json:{"updated": "2019-02-25 06:19:49.348155621 +0000 UTC"}
 resource b0e5590c-9a75-4164-b76c-d156ddaede71 {
    on ecs-f386-0002 {
@@ -105,6 +105,6 @@ drbdmanage deploy-resource web 3
 drbdmanage add-volume web 200MB --deploy 3
 ```
 ## References
-https://docs.linbit.com/docs/users-guide-9.0/
-https://www.theurbanpenguin.com/create-3-node-drbd-9-cluster-using-drbd-manage/
+* https://docs.linbit.com/docs/users-guide-9.0/
+* https://www.theurbanpenguin.com/create-3-node-drbd-9-cluster-using-drbd-manage/
 
