@@ -57,7 +57,7 @@ ceph-deploy admin ceph-rgw
 
 deploy a manager daemon. (Required only for luminous+ builds):
 ```
-ceph-deploy mgr create node1 ceph-rgw
+ceph-deploy mgr create ceph-rgw
 ```
 Add three OSD
 ```
