@@ -21,7 +21,7 @@ san_password = XMS username password
 ```
 * Configuration example:
 
-```
+```bash
 [DEFAULT]
 # ...
 enabled_backends = xtremio
@@ -44,7 +44,7 @@ san_password = opensds123
 ### edit opensds.conf
 vim /etc/opensds/opensds.conf
 
-```
+```bash
 [osdsdock]
 ...
 enabled_backends = cinder
@@ -57,7 +57,7 @@ config_path = /etc/opensds/driver/cinder.yaml
 ```
 
 ### edit cinder.yaml
-```
+```yaml
 authOptions:
   noAuth: true
   endpoint: "http://127.0.0.1/identity"
