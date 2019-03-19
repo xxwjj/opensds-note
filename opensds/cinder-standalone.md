@@ -4,7 +4,11 @@
 	wget -qO- https://get.docker.com/ | sh
 	
 ## install docker-compose
-	apt-get install docker-compose
+```
+curl -L https://github.com/docker/compose/releases/download/1.24.0-rc1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+```
+More details, please reference the link:https://github.com/docker/compose/releases
 
 ## install golang
 	wget https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz
