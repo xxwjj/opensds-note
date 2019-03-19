@@ -68,6 +68,16 @@ drbdadm create-md resourcename
 ```
 drbdadm up resourcename
 ```
+
+* sync up data 
+```
+drbdadm primary resourcename --force
+```
+
+* After sync up, change back the replication rol
+```
+drbdadm secondary resourcename
+```
 ## drbdmanage user guide
 
 drbdmanage is based on lvm, so you should install lvm firstly.
