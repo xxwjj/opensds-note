@@ -1,8 +1,9 @@
-Depoly Kubernetes Dashboard on Local-Cluster
+# Depoly Kubernetes Dashboard on Local-Cluster
+
 There are two ways to depoly dashboard, you can choose either of them to deploy kube-dashboard.
 
 ##  Depoly dashboard using modifed yaml file.
-```
+```bash
 wget https://raw.githubusercontent.com/xxwjj/work-note/master/script/kubernetes/kubernetes-dashboard.yaml
 kubectl create -f kube-dashboard.yaml
 ```
@@ -70,7 +71,7 @@ kubectl create -f cluster/addons/dashboard/
 kubectl -n kube-system get pod
 ```
 
-##Appendix
+## Appendix
 
 ### Generate the kubernetes-dashboard-certs manually
 ```
