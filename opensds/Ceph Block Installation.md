@@ -1,4 +1,5 @@
-# ceph 环境搭建 #
+# Ceph Block Installation
+
 ceph 可以通过ceph-deploy搭建，也可以直接通过docker来安装
 
 ## 通过docker 来搭建

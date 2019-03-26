@@ -1,4 +1,4 @@
-## Install OpenSDS in RedHat 7.5 manually
+## OpenSDS Cluster Installation On Redhat 7.5
 
 ### Install OpenSDS dependency library
 ```

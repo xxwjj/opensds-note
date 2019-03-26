@@ -1,4 +1,4 @@
-# Depoly Kubernetes Dashboard on Local-Cluster
+# Kubernetes Dashboard Installation
 
 There are two ways to depoly dashboard, you can choose either of them to deploy kube-dashboard.
 
