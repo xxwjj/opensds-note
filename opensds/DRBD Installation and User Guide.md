@@ -1,9 +1,11 @@
 # DRBD Installation and User Guide
 ## installation
+
+```
 add-apt-repository ppa:linbit/linbit-drbd9-stack
 apt-get update
 apt-get install drbd-utils python-drbdmanage drbd-dkms
-
+```
 ## drbdadm user guide
 
 ### check drbdadm status
