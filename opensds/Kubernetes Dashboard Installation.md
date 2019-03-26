@@ -9,8 +9,9 @@ kubectl create -f kube-dashboard.yaml
 ```
 
 ## Depoly dashboard manually
-### Overwrite the configuration yaml
 
+### Overwrite the configuration yaml
+* Enter the kubernetes resource code directory.
 * vi cluster/addons/dashboard/dashboard-service.yaml
 
 ```yaml
@@ -112,7 +113,7 @@ subjects:
 ```
 kubectl create -f admin-user.yaml
 ```
-* Verify  creating a user
+* Verify created admin user
 ```
 kubectl -n kube-system get secret| grep admin 
 ```
@@ -123,7 +124,7 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 ```
 
 ### Login dashboard
-Input https://xx.xx.xx.xx:32088 go login the kubernetes dashboard.
+Input https://xx.xx.xx.xx:32088 on browser to login the kubernetes dashboard.
 
 ## Reference:
 
