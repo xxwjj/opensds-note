@@ -1,4 +1,4 @@
-# OpenSDS Command Note
+# OpenSDS Show Commands Mome
 
 ## 1.Basic Scenario 
 
