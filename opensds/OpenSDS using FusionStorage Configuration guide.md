@@ -1,6 +1,6 @@
 # OpenSDS using FusionStorage Configuration Guide
 
-## Install FusionStorage CLI Tool On ubuntu 16.04
+## Install FusionStorage CLI tool on ubuntu 16.04
 
 FusionStorage CLI hasn't support the ubuntu yet, so you should install CLI tool manually.
 Here are installation steps:
