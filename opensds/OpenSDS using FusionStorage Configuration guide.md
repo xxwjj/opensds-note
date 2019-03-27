@@ -29,11 +29,12 @@ apt-get install python-dev -y
 pip install psutil
 ```
 
-* Execute cli to create a volume.
+* Execute CLI to verify if the CLI tool works well.
 ```
+# Create a volume
 fsc_cli --op createVolume --manage_ip 100.163.55.22  --ip 100.163.55.21 --volName app_Vol --poolId 0 --volSize 64 --thinFlag 0
+# Show a volume
 fsc_cli --op queryVolume --manage_ip 100.163.55.22 --ip 100.163.55.21 --volName app_Vol
-
 ```
 
 ## Modified the opensds confuration file.
@@ -41,7 +42,7 @@ fsc_cli --op queryVolume --manage_ip 100.163.55.22 --ip 100.163.55.21 --volName 
 *  Set the fusionStorage as the backend.
 
 
-vi /etc/opensds/opensds.conf/
+vim /etc/opensds/opensds.conf/
 
 ```
 [osdsdock]
@@ -92,7 +93,7 @@ pool:
         latency: 3ms
 ```
 ## Notes
-If you want to use the iscsi feature, you should enabled the iscsi and confiure the port numb on fusionStorage dashboard.
+If you want to use the iscsi, you should enabled the iscsi feature and confiure the port number on fusionStorage dashboard.
 ```
 Enter Resource "Pool --> Block Storage Clients --> more --> enable"iSCSI to enable
 Enter Resource "Pool --> Block Storage Clients --> more --> Configure iSCSI Port --> Add" to configure iscsi export port. 
