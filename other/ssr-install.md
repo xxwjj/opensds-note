@@ -42,6 +42,10 @@ lsmod | grep bbr
 返回值有 tcp_bbr 模块即说明bbr已启动
 
 ### shadownsock安装方法
+```
+wget https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks-all.sh
+bash shadowsocks-all.sh 
+```
 参考：
 
 https://teddysun.com/486.html
