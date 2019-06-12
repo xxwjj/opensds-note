@@ -4,6 +4,9 @@
 ```
 yum install librados2-devel
 yum install librbd1-devel
+yum install epel-release
+yum --enablerepo=epel -y install scsi-target-utils
+yum -y install scsi-target-utils
 ```
 
 ### Download binary
