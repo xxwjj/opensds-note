@@ -115,6 +115,21 @@ for bucket in conn.get_all_buckets():
 )
 ```
 
+### create a pool for rbd
+* set default pg,pgs num, add following content in /etc/ceph/ceph.conf
+```
+osd pool default pg num = 128
+osd pool default pgp num = 128
+```
+* set mesmatch feature, run command:
+```
+ceph osd crush tunables legacy
+```
+* create a pool, for example:
+```
+ceph osd pool create test-pool 128
+```
+
 ### reference dock
 http://docs.ceph.com/docs/master/start/quick-ceph-deploy/
 
